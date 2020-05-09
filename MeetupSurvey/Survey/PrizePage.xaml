@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Survey.PrizePage" 
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
+             xmlns:local="MeetupSurvey.Survey.PrizePage" 
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls" 
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             xmlns:indicators="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:control="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation" 
+             xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+             xmlns:converters="clr-namespace:MeetupSurvey.Infrastructure"
+             NavigationPage.HasNavigationBar="false" 
+             BackgroundColor="White" 
+             Visual="Material"
+             x:Name="this">
+    <ContentPage.Resources>
+        <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+        <converters:InverseBoolValueConverter x:Key="Not"/>
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Down" x:Key="titleLabelFadeInAnimation" Duration="850" Target="{x:Reference titleLabel}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Down" x:Key="ellipsisFadeInAnimation" Duration="850" Target="{x:Reference ellipsis}"/>
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Up" x:Key="entriesFadeInAnimation" Duration="850" Target="{x:Reference entries}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Down" x:Key="backgroundFadeInAnimation" Duration="700" Target="{x:Reference backgroundImage}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Up" x:Key="whiteBoxFadeInAnimation" Duration="700" Target="{x:Reference whiteBox}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Up" x:Key="layoutFadeInAnimation" Duration="600" Target="{x:Reference layout}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Up" x:Key="carouselFadeInAnimation" Duration="600" Target="{x:Reference carousel}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Down" x:Key="loadingFadeInAnimation" Duration="650" Target="{x:Reference loading}" />
+        <xamanimation:FadeOutAnimation Easing="CubicOut" Direction="Down" x:Key="loadingFadeOutAnimation" Duration="500" Target="{x:Reference loading}"  />
+
+    </ContentPage.Resources>
+    
+    <Grid x:Name="layout">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+            <Grid x:Name="backgroundImage" Opacity="0" Grid.Row="0">
+                <ffimageloading:CachedImage HorizontalOptions="FillAndExpand" 
+                                            Aspect="AspectFill" Opacity="0.3" 
+                                            VerticalOptions="FillAndExpand" 
+                                            DownsampleToViewSize="true" 
+                                            DownsampleHeight="100" 
+                                            DownsampleWidth="300" 
+                                            Source="defaultImage.png" 
+                                            FadeAnimationEnabled="false">
+                </ffimageloading:CachedImage>
+                <BoxView HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource PrimaryDark}" Opacity="0.8" />
+            </Grid>
+            
+                
+            
+                <BoxView x:Name="whiteBox" BackgroundColor="White" Grid.Row="1" Opacity="0" Margin="0,-6,0,0" />
+                <StackLayout Grid.Row="1" Margin="0" BackgroundColor="White">
+                    <StackLayout Margin="10,10,10,0" Orientation="Vertical" VerticalOptions="Start">
+                            <Grid x:Name="entries" Opacity="0" VerticalOptions="Start">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Entries}" TextColor="{StaticResource Primary}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,0" />
+                                <Label Grid.Column="0" Text="Number of Entries" TextColor="{StaticResource AccessibleGray}" HorizontalOptions="Center" FontSize="Micro" Margin="0,30,0,0" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                <BoxView Grid.Column="0" WidthRequest="1" BackgroundColor="{StaticResource LightGray60}" HorizontalOptions="End"/>
+                                <Label Grid.Column="1" Text="{Binding Prizes.Count}" TextColor="{StaticResource Primary}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,0" />
+                                <Label Grid.Column="1" Text="Number of Prizes" TextColor="{StaticResource AccessibleGray}" HorizontalOptions="Center" FontSize="Micro" Margin="0,30,0,0" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource LightGray60}" HorizontalOptions="End" />
+                                <Label Grid.Column="2" Text="{Binding Prizes.Count}" TextColor="{StaticResource Primary}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,0" />
+                                <Label Grid.Column="2" Text="Number of Winners" TextColor="{StaticResource AccessibleGray}" HorizontalOptions="Center" FontSize="Micro" Margin="0,30,0,0" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                               
+                            </Grid>
+                    </StackLayout>
+                </StackLayout>
+        
+        <cards:CarouselView  x:Name="carousel"
+                                      ItemsSource="{Binding Prizes}" 
+                                      HorizontalOptions="FillAndExpand" 
+                                      BackgroundColor="Transparent"
+                                      SelectedIndex="{Binding Position, Mode=TwoWay}" 
+                                      Grid.Row="0"
+                                      Margin="0,70,0,0"
+                                      Opacity="0" 
+                             IsCyclical="false"
+                              ItemAppearing="Handle_ItemAppearing"
+                             SwipeThresholdDistance="10"
+                             ItemSwiped="Handle_ItemSwiped"
+                             ItemDisappearing="Handle_ItemDisappearing" UserInteracted="Handle_UserInteracted"
+                             SelectedItem="{Binding SelectedPrize, Mode=TwoWay}" >
+                <indicators:IndicatorsControl/>
+            <cards:CarouselView.ItemTemplate>
+                <DataTemplate>
+                        <Grid BindingContextChanged="Handle_BindingContextChanged">
+                        <!--<Grid.Resources>
+                            <xamanimation:FadeInAnimation Easing="CubicOut" Direction="Down" x:Key="winnerBannerFadeInAnimation" Duration="650" Target="{x:Reference winnerBanner}" />
+                            <xamanimation:FadeInAnimation Easing="CubicOut" x:Key="winnerInformationFadeInAnimation" Duration="650" Target="{x:Reference winnerInformation}" Direction="Up"/>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerBannerFadeOutAnimation" Duration="650" Target="{x:Reference winnerBanner}" Opacity="0"/>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerInformationFadeOutAnimation" Duration="650" Target="{x:Reference winnerInformation}" Opacity="0"/>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="prizeBoxFadeInAnimation" Duration="650" Opacity="1" Target="{x:Reference prizeBox}" />
+                             <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="prizeBoxFadeOutAnimation" Duration="650" Opacity="0" Target="{x:Reference prizeBox}" />
+                        </Grid.Resources>-->
+                        
+                        <Grid.RowDefinitions>
+                           <RowDefinition Height="2*"/>
+                           <RowDefinition Height="3*"/>
+                           <RowDefinition Height="1*"/>
+                       </Grid.RowDefinitions>
+                            
+                            <Frame Grid.RowSpan="2" Visual="Material" BackgroundColor="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="20,20,20,100" Padding="0">
+                            
+                            <Grid>
+                         <ffimageloading:CachedImage  Opacity="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"
+                                                      Margin="0,0,0,0"
+                                                      DownsampleToViewSize="true"
+                                                      Source="{Binding Photo}">
+                                 </ffimageloading:CachedImage>
+                                    
+                                    <Grid VerticalOptions="Start" HorizontalOptions="Start" Margin="7,10,0,10" HeightRequest="25">
+                    <BoxView BackgroundColor="Black" Opacity=".7" />
+                    <Label Text="{Binding Name}" FontSize="Small" TextColor="White" FontAttributes="Bold" LineBreakMode="TailTruncation" VerticalOptions="Center" HorizontalOptions="Center" Margin="10,0" />
+                </Grid>
+                                    </Grid>
+                            </Frame>
+                                </Grid>
+                </DataTemplate>
+            </cards:CarouselView.ItemTemplate>
+        </cards:CarouselView>
+        
+        
+        <Grid x:Name="boxGrid" InputTransparent="true">
+            <Grid.Resources>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerBannerFadeInAnimation" Opacity="1" Duration="650" Target="{x:Reference winnerBanner}" />
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerInformationFadeInAnimation" Opacity="1" Duration="650" Target="{x:Reference winnerInformation}" />
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerBannerFadeOutAnimation" Duration="100" Target="{x:Reference winnerBanner}" Opacity="0"/>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="winnerInformationFadeOutAnimation" Duration="100" Target="{x:Reference winnerInformation}" Opacity="0"/>
+                            <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="prizeBoxFadeInAnimation" Duration="650" Opacity="1" Target="{x:Reference prizeBox}" />
+                             <xamanimation:FadeToAnimation Easing="CubicOut" x:Key="prizeBoxFadeOutAnimation" Duration="250" Opacity="0" Target="{x:Reference prizeBox}" />
+                        </Grid.Resources>
+            <Grid.RowDefinitions>
+                           <RowDefinition Height="2*"/>
+                           <RowDefinition Height="3*"/>
+                           <RowDefinition Height="1*"/>
+                       </Grid.RowDefinitions>
+                       
+                        <Grid Grid.Row="1" Margin="0,-40,0,0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60*" />
+                                <RowDefinition Height="150*"/>
+                                <RowDefinition Height="200*"/>
+                                </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="352*"/>
+                                <ColumnDefinition Width="280*"/>
+                                <ColumnDefinition Width="350*"/>
+                            </Grid.ColumnDefinitions>
+                
+                
+                            
+                             <lottie:AnimationView Grid.RowSpan="3" Grid.ColumnSpan="3" x:Name="prizeBox" Animation="winningballot.json"
+                                      Loop="false" AutoPlay="false" VerticalOptions="FillAndExpand" Margin="-40,0,-40,-60"
+                                      HorizontalOptions="FillAndExpand" WidthRequest="500" HeightRequest="500" Opacity="0"
+                                      PlaybackFinishedCommand="{Binding Source={x:Reference this}, Path=BindingContext.ShowBanner}"
+                                      IsVisible="true"/>
+                             
+                                 
+
+                                 
+                            
+                                 <Grid Grid.Row="1" Grid.ColumnSpan="3" x:Name="winnerInformation" HorizontalOptions="Center" Margin="0,0,0,10" VerticalOptions="FillAndExpand" Opacity="0">
+                                                        <ffimageloading:CachedImage 
+                                                             x:Name="imageFrame"
+                                                             HorizontalOptions="Center" Opacity="1"
+                                                             VerticalOptions="FillAndExpand"
+                                                             DownsampleToViewSize="true" Margin="8,10,8,10"
+                                                             Source="{Binding SelectedPrize.WinnerPhoto}">
+                                                            <ffimageloading:CachedImage.Transformations>
+                                                                <ffTransformations:CircleTransformation />
+                                                            </ffimageloading:CachedImage.Transformations>
+                                                        </ffimageloading:CachedImage>
+                                             <Grid VerticalOptions="End" HorizontalOptions="Center" HeightRequest="20" Margin="0,0,0,0">
+                                                <BoxView BackgroundColor="Black" Opacity="0.8" />
+                                                <Label Margin="5,0" FontSize="Micro" TextColor="White" Text="{Binding SelectedPrize.WinnerName}" 
+                                                       VerticalOptions="Center" HorizontalOptions="Center" />
+                                            </Grid>
+                                            <Image x:Name="winnerBanner" Source="winner.png" Margin="0,-40,0,0"  HorizontalOptions="Center" VerticalOptions="Start" Opacity="0"/>
+                                 </Grid>
+                            
+
+                            </Grid>
+                            
+            
+            </Grid>
+        
+            <Button Text="Start Prize Draw" Command="{Binding StartPrizeDraw}" Padding="3" Margin="30,5,30,45" 
+                                    CommandParameter="{Binding SelectedPrize}" HeightRequest="50" VerticalOptions="End"
+                                    Style="{StaticResource BlueButton}" IsVisible="{Binding SelectedPrize.CanExecutePrizeDraw, FallbackValue=false}"/>
+
+        
+        <StackLayout Grid.Row="0" Orientation="Vertical" Margin="0,35,0,0" VerticalOptions="Start">
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,20">
+                        <Button Text="{x:Static icons:IconFont.AngleLeft}" Style="{StaticResource BackButton}" Command="{Binding GoBack}" Padding="10,0,0,0"/>
+                        <Label x:Name="titleLabel" Text="{Binding SurveyName}" Style="{StaticResource Header}" VerticalOptions="Center" Opacity="0" 
+                               LineBreakMode="TailTruncation"/>
+                        <Button x:Name="ellipsis" Text="{x:Static icons:IconFont.EllipsisV}" Command="{Binding More}" 
+                                Style="{StaticResource EllipsisButton}" Opacity="0" IsVisible="{Binding Survey.IsAdmin}"/>                
+                    </StackLayout>
+                </StackLayout>
+         <ActivityIndicator x:Name="loading" Margin="20,45,20,0" IsRunning="true" Color="White" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Opacity="0"/>
+    </Grid>
+</ContentPage>

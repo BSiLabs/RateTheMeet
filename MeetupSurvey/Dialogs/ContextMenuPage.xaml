@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="MeetupSurvey.Dialogs.ContextMenuPage"
+              xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+              xmlns:rga="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+              CloseWhenBackgroundIsClicked="true">
+
+   <rg:PopupPage.Animation>
+        <rga:ScaleAnimation PositionIn="Right"
+                            PositionOut="Right"
+                            ScaleIn="1.2"
+                            ScaleOut="0.8"
+                            DurationIn="300"
+                            DurationOut="250"
+                            EasingIn="CubicOut"
+                            EasingOut="CubicIn"
+                            HasBackgroundAnimation="True"/>
+    </rg:PopupPage.Animation>
+    
+    <rg:PopupPage.Content>
+            <Frame Margin="10,10,10,5" WidthRequest="250"
+                  Padding="5" HasShadow="true"
+                  HorizontalOptions="End"
+                  VerticalOptions="{Binding VerticalPlacement}"
+                  BackgroundColor="{StaticResource Blue}" 
+                  CornerRadius="5">
+            
+                    <StackLayout BindableLayout.ItemsSource="{Binding ItemList}" VerticalOptions="Center" Margin="0,5">
+                    <BindableLayout.ItemTemplate>
+                            <DataTemplate> 
+                            <StackLayout>
+                                    <Grid Padding="8">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Action}" />
+                                        </Grid.GestureRecognizers>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                            <Label Text="{Binding Icon}" FontFamily="{DynamicResource FontAwesome}" TextColor="White" VerticalOptions="Center" FontSize="25" Margin="5"/>
+                                            <Label Margin="5,0,0,0" Text="{Binding Text}" HorizontalTextAlignment="Center" VerticalOptions="Center" FontSize="Medium" TextColor="White" />
+                                            
+                                        </StackLayout>
+                                
+                                    </Grid>
+                                <BoxView IsVisible="{Binding ShowSeparator}" BackgroundColor="{StaticResource LightGray60}" Opacity=".1" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand" Margin="5,0"/>
+                                </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                    </StackLayout>   
+          </Frame>
+    </rg:PopupPage.Content>
+</rg:PopupPage>

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Acr.Core" Version="3.0.1" />
+    <PackageReference Include="HttpTracer" Version="2.0.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+    <PackageReference Include="MonkeyCache.SQLite" Version="1.2.0-beta" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="MainPage.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.ApiClient\MeetupSurvey.ApiClient.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mocks\" />
+  </ItemGroup>
+</Project>

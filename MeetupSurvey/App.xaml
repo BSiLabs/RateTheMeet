@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Autofac;assembly=Prism.Autofac.Forms" x:Class="MeetupSurvey.App" xmlns:theming="clr-namespace:MeetupSurvey.Theming;assembly=MeetupSurvey">
+    <Application.Resources>
+        <!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <OnPlatform x:TypeArguments="x:String" x:Key="OpenSansBold">
+                <On Platform="Android" Value="OpenSans-Bold.ttf#Open Sans" />
+                <On Platform="iOS" Value="OpenSans-Bold" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="OpenSansRegular">
+                <On Platform="Android" Value="OpenSans-Regular.ttf#Open Sans" />
+                <On Platform="iOS" Value="OpenSans-Regular" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="OpenSansLight">
+                <On Platform="Android" Value="OpenSans-Light.ttf#Open Sans" />
+                <On Platform="iOS" Value="OpenSans-Light" />
+            </OnPlatform>
+            
+            <OnPlatform x:TypeArguments="x:String" x:Key="ComfortaaBold">
+                <On Platform="Android" Value="Comfortaa-Bold.ttf#Comfortaa" />
+                <On Platform="iOS" Value="Comfortaa-Bold" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="ComfortaaRegular">
+                <On Platform="Android" Value="Comfortaa-Regular.ttf#Comfortaa" />
+                <On Platform="iOS" Value="Comfortaa-Regular" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="ComfortaaLight">
+                <On Platform="Android" Value="Comfortaa-Light.ttf#Comfortaa" />
+                <On Platform="iOS" Value="Comfortaa-Light" />
+            </OnPlatform>
+            <ResourceDictionary.MergedDictionaries>
+                <theming:ElementStyling />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

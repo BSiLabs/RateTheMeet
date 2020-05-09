@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="Refit" Version="4.7.9" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="MainPage.xaml.cs" />
+    <Compile Remove="AuthToken.cs" />
+    <Compile Remove="IMeetupClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+  </ItemGroup>
+</Project>

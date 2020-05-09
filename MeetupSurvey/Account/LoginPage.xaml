@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Account.LoginPage"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+             Visual="Material"
+             BackgroundColor="white">
+    
+    <ContentPage.Resources>
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      Duration="900"
+                                      x:Key="logoFadeInAnimation"
+                                      Target="{x:Reference logo}"/>
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      Duration="900"
+                                      x:Key="buttonFadeInAnimation"
+                                      Target="{x:Reference button}"/>
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      Duration="900"
+                                      x:Key="bsiLogoFadeInAnimation"
+                                      Target="{x:Reference bsiLogo}"/>
+    </ContentPage.Resources>
+    
+             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                    <Grid>
+                        <ffimageloading:CachedImage Grid.Row="0" 
+                                                            HorizontalOptions="FillAndExpand" 
+                                                            Aspect="AspectFill" 
+                                                            Opacity="0.15" 
+                                                            VerticalOptions="FillAndExpand" 
+                                                            DownsampleToViewSize="true" 
+                                                            DownsampleHeight="80" 
+                                                            DownsampleWidth="300" 
+                                                            Source="LifestylePhoto.png" 
+                                                            FadeAnimationEnabled="false">
+                        </ffimageloading:CachedImage>
+            
+                                <BoxView HorizontalOptions="Fill" 
+                                         VerticalOptions="Fill" 
+                                         BackgroundColor="Black" 
+                                         Opacity="0.7"/>
+            
+                                <Image x:Name="logo" Source="FinalLogoWhite.png" WidthRequest="250" HorizontalOptions="Center" Margin="0,-50,0,0" Grid.Row="0" Opacity="0"/>
+                                
+                    </Grid>
+                    
+                    <Frame Grid.Row="1" HasShadow="false" Margin="0,-70,0,0" Padding="30" CornerRadius="8" BackgroundColor="White" Visual="Default">
+                            <StackLayout>
+                    
+                                <Label Text="{Binding Localize[Welcome]}" FontAttributes="Bold" FontSize="Large" TextColor="{StaticResource Primary}" Margin="0,0,0,10">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Comfortaa-Bold" />
+                                            <On Platform="Android" Value="Comfortaa-Bold.ttf#Comfortaa-Bold" />
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+                    
+                                <Label Text="{Binding Localize[Summary]}" FontFamily="Open Sans" FontSize="Small" TextColor="{StaticResource PrimaryDark}" Margin="0,0,0,30">
+                                    <Label.FontFamily>
+                                            <OnPlatform x:TypeArguments="x:String">
+                                                <On Platform="iOS" Value="OpenSans-Regular" />
+                                                <On Platform="Android" Value="OpenSans-Regular.ttf#Comfortaa-Bold" />
+                                            </OnPlatform>
+                                        </Label.FontFamily>
+                                </Label>
+                                <Button x:Name="button"
+                                        Image="meetupLogoRound.png"
+                                        Text="{Binding Localize[Login]}" 
+                                        TextColor="White"
+                                        FontSize="Medium"
+                                        FontAttributes="Bold"
+                                        Command="{Binding Login}"
+                                        BackgroundColor="#F64060" 
+                                        CornerRadius="23"  
+                                        ContentLayout="Left, 10"
+                                        Grid.Row="1"
+                                        HeightRequest="50"
+                                        Opacity="0"/>
+                            </StackLayout>
+                        </Frame>
+                    
+                    <StackLayout x:Name="bsiLogo" VerticalOptions="EndAndExpand" Margin="0,0,0,30" Grid.Row="2" BackgroundColor="White" Opacity="0">
+                        <Label Text="{Binding Localize[PoweredBy]}" FontSize="Small" TextColor="Black" HorizontalOptions="Center"/>
+                        <Image Source="bsiLabsLogo.png" HorizontalOptions="Center" WidthRequest="100"/>
+                    </StackLayout>
+        </Grid>
+</ContentPage>

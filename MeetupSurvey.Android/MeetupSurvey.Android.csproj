@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19D199A4-AAA9-4BC2-B9D0-887DDD24C213}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MeetupSurvey.Droid</RootNamespace>
+    <AssemblyName>RateTheMeet</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <JavaMaximumHeapSize />
+    <JavaOptions />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <MandroidI18n />
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <AndroidSupportedAbis Condition=" '$(AndroidSupportedAbis)' == '' ">armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'API|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\API\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Mono.Android.Export" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Threading.Tasks.Extensions">
+      <Version>4.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.Compat" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.Palette" Version="28.0.0.3" />
+    <PackageReference Include="System.Reactive">
+      <Version>4.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms.Visual.Material">
+      <Version>4.4.0.991640</Version>
+    </PackageReference>
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie">
+      <Version>2.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="CirclePageIndicatorPatched">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="CardsView">
+      <Version>2.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Push">
+      <Version>2.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomUrlSchemeInterceptorActivity.cs" />
+    <Compile Include="PlatformStyling.cs" />
+    <Compile Include="SplashActivity.cs" />
+    <Compile Include="Services\NotificationsImpl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Resources\winningballot.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\hamburger.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\hamburger.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\hamburger.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\hamburger.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\meetupLogoRound.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\meetupLogoRound.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\meetupLogoRound.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\meetupLogoRound.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\surveyComplete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\surveyComplete.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\surveyComplete.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\surveyComplete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\star.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\star.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\star.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\star.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\emptystar.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\emptystar.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\emptystar.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\emptystar.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\edit.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\edit.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\edit.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\edit.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\award.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\bookmark.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\award.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\bookmark.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\award.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\bookmark.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\award.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\bookmark.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\bsiLabsLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\defaultImage.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\bsiLabsLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\defaultImage.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\bsiLabsLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\defaultImage.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\bsiLabsLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\defaultImage.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\logout.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\lose.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\logout.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\lose.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\logout.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\lose.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\logout.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\pending.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\save.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\pending.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\save.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\pending.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\save.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\save.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\angleLeft.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\angleRight.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\angleLeft.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\angleRight.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\angleLeft.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\angleRight.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\angleLeft.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\angleRight.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\won.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\won.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\won.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ellipsis.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ellipsis.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ellipsis.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ellipsis.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\home.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\home.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\home.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\home.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\signout.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\signout.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\signout.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\signout.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\blueCutCorner.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\rocket.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\rocket.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\rocket.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\rocket.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_round_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_round_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_round_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_round_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_round_launcher.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\LogoAlt.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\LogoAlt.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\LogoAlt.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\LogoAlt.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\SplashBackground.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\bsiLabsLogo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\bsiLabsLogo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\bsiLabsLogo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\bsiLabsLogo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Logo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\Logo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Logo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Logo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\LifestylePhoto.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\LifestylePhoto.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\LifestylePhoto.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\LifestylePhoto.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\noGroups.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\noGroups.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\noGroups.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\noGroups.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\FinalLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\FinalLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\FinalLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\FinalLogoWhite.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\winner.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\winner.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\winner.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\winner.png" />
+    <AndroidResource Include="Resources\xml\file_paths.xml" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_notification.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_notification.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_notification.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_notification.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_notification.png" />
+    <AndroidResource Include="Resources\values\color.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.axml" />
+    <AndroidResource Include="Resources\layout\Toolbar.axml" />
+    <AndroidResource Include="Resources\values\styles.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey\MeetupSurvey.csproj">
+      <Project>{5227B587-09DB-4AFB-8A8E-48922F9CBFB8}</Project>
+      <Name>MeetupSurvey</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj">
+      <Project>{501D9ABC-0EBC-4E04-BE0E-545212899816}</Project>
+      <Name>MeetupSurvey.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeetupSurvey.Logging.AppCenter\MeetupSurvey.Logging.AppCenter.csproj">
+      <Project>{89816A04-3AEF-407F-A54A-1492CE83DD6A}</Project>
+      <Name>MeetupSurvey.Logging.AppCenter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj">
+      <Project>{E29FF308-2255-42EE-9368-7EB765743DD8}</Project>
+      <Name>MeetupSurvey.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Comfortaa-Bold.ttf" />
+    <AndroidAsset Include="Assets\Comfortaa-Light.ttf" />
+    <AndroidAsset Include="Assets\Comfortaa-Regular.ttf" />
+    <AndroidAsset Include="Assets\OpenSans-Bold.ttf" />
+    <AndroidAsset Include="Assets\OpenSans-Light.ttf" />
+    <AndroidAsset Include="Assets\OpenSans-Regular.ttf" />
+    <AndroidAsset Include="Assets\swipe.json" />
+    <AndroidAsset Include="Assets\fa-light-300.ttf" />
+    <AndroidAsset Include="Assets\fa-brands-400.ttf" />
+    <AndroidAsset Include="Assets\winningballot.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <GoogleServicesJson Include="google-services.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>

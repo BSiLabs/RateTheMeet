@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+        <DebugType>full</DebugType>
+        <RootNamespace>MeetupSurvey</RootNamespace>
+        <LangVersion>latest</LangVersion>
+        <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microcharts.Forms" Version="0.8.5-pre" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="Prism.Autofac.Forms" Version="7.1.0.431" />
+    <PackageReference Include="System.Reactive" Version="4.1.3" />
+    <PackageReference Include="ReactiveUI" Version="9.12.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="9.12.1" />
+    <PackageReference Include="Plugin.Jobs.Autofac" Version="1.4.0" />
+    <PackageReference Include="LiveXAML" Version="2.1.70" />
+    <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
+    <PackageReference Include="Xamanimation" Version="1.2.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Microcharts" Version="0.8.5-pre" />
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="2.7.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.0.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="MonkeyCache.SQLite" Version="1.2.0-beta" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="CardsView" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AppCenter.Push" Version="2.0.0" />
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.Data.Impl\MeetupSurvey.Data.Impl.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.Device.Impl\MeetupSurvey.Device.Impl.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.Logging.AppCenter\MeetupSurvey.Logging.AppCenter.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Xamarin.iOS">
+      <HintPath>..\..\..\..\..\Library\Frameworks\Xamarin.iOS.framework\Versions\12.8.0.0\lib\mono\Xamarin.iOS\Xamarin.iOS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="IAppVersionProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\ToastPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </Page>
+  </ItemGroup>
+</Project>

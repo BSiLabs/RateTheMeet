@@ -1,0 +1,1 @@
+﻿public enum NotificationType { NewSurvey, PrizeDraw}

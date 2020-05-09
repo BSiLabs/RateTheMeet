@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Survey.SurveyResultPage"
+             x:Name="page"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" 
+             xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             xmlns:local="clr-namespace:MeetupSurvey.Infrastructure" 
+             xmlns:behaviors="clr-namespace:MeetupSurvey.Behaviors"
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             Visual="Material"
+             xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+             BackgroundColor="{StaticResource LightGray60}"
+             NavigationPage.HasNavigationBar="false">
+
+    <ContentPage.Resources>
+        <behaviors:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+        <local:InverseBoolValueConverter x:Key="Not" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="backgroundFadeInAnimation"
+                                      Duration="650"
+                                      Target="{x:Reference backgroundImage}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="loadingFadeInAnimation"
+                                      Duration="650"
+                                      Target="{x:Reference loading}" />
+        
+        <xamanimation:FadeOutAnimation Easing="CubicOut"
+                                       Direction="Down"
+                                       x:Key="loadingFadeOutAnimation"
+                                       Duration="350"
+                                       Target="{x:Reference loading}"  />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="whiteBoxFadeInAnimation"
+                                      Duration="450"
+                                      Target="{x:Reference whiteBox}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="carouselFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference carousel}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="titleLabelFadeInAnimation"
+                                      Duration="800"
+                                      Target="{x:Reference titleLabel}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="commentLabelFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference commentLabel}" />
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="ellipsisFadeInAnimation"
+                                      Duration="900"
+                                      Target="{x:Reference ellipsis}"/>
+        </ContentPage.Resources>
+        
+    
+    <Grid x:Name="layout">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+            <Grid x:Name="backgroundImage" Opacity="0">
+                <ffimageloading:CachedImage Grid.Row="0" 
+                                                    HorizontalOptions="FillAndExpand" 
+                                                    Aspect="AspectFill" 
+                                                    Opacity="0.3" 
+                                                    VerticalOptions="FillAndExpand" 
+                                                    DownsampleToViewSize="true" 
+                                                    DownsampleHeight="100" 
+                                                    DownsampleWidth="300" 
+                                                    Source="defaultImage.png" 
+                                                    FadeAnimationEnabled="false">
+                        </ffimageloading:CachedImage>
+    
+                        <BoxView HorizontalOptions="Fill" 
+                                 VerticalOptions="Fill" 
+                                 BackgroundColor="{StaticResource PrimaryDark}" 
+                                 Opacity="0.8"/>
+                        
+            </Grid>
+            
+        
+        
+        <BoxView x:Name="whiteBox" BackgroundColor="White" Grid.Row="1" Opacity="0" Margin="0,-6,0,0" />
+        <Label x:Name="commentLabel" Grid.Row="1" Margin="20,5" Text="{Binding Localize[Comments]}" Opacity="0" TextColor="{StaticResource PrimaryLight}" FontSize="Large" FontAttributes="Bold"/>
+        
+        <StackLayout Margin="20,75,0,0">
+            <Label Text="{Binding Localize[NoData]}" TextColor="White" FontSize="Medium" FontAttributes="Bold" IsVisible="{Binding HasData, Converter={StaticResource Not}}"/>
+        </StackLayout>
+        
+    <carousel:CarouselViewControl x:Name="carousel" 
+                                  Orientation="Horizontal" 
+                                  InterPageSpacing="10" 
+                                  ItemsSource="{Binding SurveyQuestionResults}" 
+                                  HorizontalOptions="FillAndExpand" 
+                                  ShowIndicators="true" 
+                                  CurrentPageIndicatorTintColor="{StaticResource Secondary}" 
+                                  BackgroundColor="Transparent" 
+                                  Position="{Binding Position, Mode=TwoWay}" 
+                                  IsSwipeEnabled="true"
+                                  Grid.RowSpan="2"
+                                  Opacity="0">
+        <carousel:CarouselViewControl.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="340"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid BackgroundColor="Transparent" Margin="0,0" Grid.Row="0">
+                       
+                      
+                        <StackLayout  Orientation="Vertical"  Margin="0,50,0,10">
+                           
+                            <Label Text="{Binding Name}" TextColor="White" Margin="20,15,10,30" />
+                               
+                                
+                          
+                           <microcharts:ChartView HeightRequest="175" Chart="{Binding Chart}"/> 
+                        </StackLayout>
+                         
+<!--                            This is the View Prizes button on the UI instead of context menu, keeping it here for now incase we go this route-->
+                            <!--<Grid IsVisible="{Binding HasPrize}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Margin="0,50,0,0">
+                                <Button HorizontalOptions="Center"
+                                        BackgroundColor="Transparent"
+                                        Text="View Prizes" 
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        Command="{Binding Source={x:Reference page}, Path=BindingContext.GoToPrize}"
+                                        Padding="50,0,15,0"
+                                        Visual="Default" />
+                                <Label VerticalOptions="Center" Text="{x:Static icons:IconFont.Award}" 
+                                       android:VisualElement.Elevation="10"
+                                       FontFamily="{DynamicResource FontAwesome}"
+                                       FontSize="25"
+                                       HorizontalOptions="Start"
+                                       HorizontalTextAlignment="Center"
+                                       WidthRequest="60"
+                                       TextColor="White"   
+                                       InputTransparent="true"/>
+                            </Grid>-->
+                    </Grid>
+                        
+            <Label Grid.Row="1" Margin="20,10" Text="{Binding Localize[Comments]}" FontAttributes="Bold" TextColor="{StaticResource PrimaryLight}"/>
+                    
+            <ScrollView Grid.Row="1" Margin="0,40,0,0">
+               
+                <StackLayout BindableLayout.ItemsSource="{Binding Comments}" >
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                            <Label Text="{Binding}" TextColor="Black" Margin="20,10"/>
+                            <BoxView Margin="10,10,10,0" HeightRequest="1" BackgroundColor="{StaticResource LightGray60}" Opacity=".7"/>
+                            </StackLayout>
+                         </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+             </ScrollView>
+             </Grid>
+            </DataTemplate>
+            
+        </carousel:CarouselViewControl.ItemTemplate>
+    </carousel:CarouselViewControl>
+        
+      <Grid Margin="0,10" VerticalOptions="Start">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+        <Button Text="{x:Static icons:IconFont.AngleLeft}" Style="{StaticResource BackButton}" Command="{Binding GoBack}" Padding="10,0,0,0"/>
+                
+            <Label Grid.Column="1" x:Name="titleLabel" Margin="0" Text="{Binding SurveyName}" 
+                   Style="{StaticResource Header}" FontSize="Large"  Opacity="0" LineBreakMode="TailTruncation">
+                <Label.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,0,0" />
+                        <On Platform="Android" Value="-5,0,0,0" />
+                    </OnPlatform>
+                </Label.Margin>
+            </Label>
+            
+            <Button Grid.Column="2" x:Name="ellipsis" Style="{StaticResource EllipsisButton}" Text="{x:Static icons:IconFont.EllipsisV}" Command="{Binding More}" Opacity="0" />
+            
+      </Grid>
+        <ActivityIndicator x:Name="loading" Margin="20,25,20,0" IsRunning="true" Color="White" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Opacity="0"/>
+        
+        </Grid>
+</ContentPage>

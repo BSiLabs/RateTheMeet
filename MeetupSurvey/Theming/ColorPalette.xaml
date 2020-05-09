@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                    x:Class="MeetupSurvey.Theming.ColorPalette"
+                    xmlns:theming="clr-namespace:MeetupSurvey.Theming">
+    <!-- See https://material.io/color for more help choosing a Material Design Color scheme -->
+    
+    <Color x:Key="Primary">#008FFE</Color>
+    <Color x:Key="PrimaryDark">#00489E</Color>
+    <Color x:Key="PrimaryLight">#69bfff</Color>
+    <Color x:Key="PrimaryDarkTranslucent">#000000</Color> 
+    <Color x:Key="Secondary">#00d8ff</Color>
+    <Color x:Key="SecondaryDark">#00a6cc</Color>
+    <Color x:Key="SecondaryLight">#6dffff</Color>
+    <Color x:Key="BSIGray">#A5A5A5</Color>
+    <Color x:Key="Blue">#2c6baf</Color>
+    
+    <Color x:Key="LightGray">#dad8d6</Color>
+    <Color x:Key="LightGray80">#e2e0de</Color>
+    <Color x:Key="AccessibleGray">#737373</Color>
+    <Color x:Key="LightGray60">#e8e7e5</Color>
+</ResourceDictionary>

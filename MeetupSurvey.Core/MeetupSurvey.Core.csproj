@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Device\" />
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Data\AuthToken.cs" />
+    <Compile Remove="Data\AuthUser.cs" />
+    <Compile Remove="Unit.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.1.3" />
+  </ItemGroup>
+</Project>

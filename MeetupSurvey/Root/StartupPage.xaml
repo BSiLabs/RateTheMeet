@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Root.StartupPage"
+             NavigationPage.HasNavigationBar="false"
+             BackgroundColor="white"
+             Visual="Material"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation">
+    
+         <ContentPage.Resources>
+    
+            <xamanimation:TranslateToAnimation Easing="CubicOut"
+                                              TranslateY="-40"
+                                              x:Key="logoFadeInAnimation"
+                                              Duration="650"
+                                              Target="{x:Reference logo}" />
+            
+            <xamanimation:FadeInAnimation Easing="CubicOut"
+                                          Direction="Up"
+                                          x:Key="bsiLogoFadeInAnimation"
+                                          Duration="650"
+                                          Target="{x:Reference bsiLogo}" />
+        
+            <xamanimation:FadeInAnimation Easing="CubicOut"
+                                          Direction="Down"
+                                          x:Key="loadingFadeInAnimation"
+                                          Duration="750"
+                                          Target="{x:Reference loading}" />
+        </ContentPage.Resources>
+            
+        <Grid  Margin="10">
+            <Image x:Name="logo" Source="Logo.png" WidthRequest="290" HeightRequest="290" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>  
+             <Image x:Name="bsiLogo" Source="bsiLabsLogo.png" WidthRequest="150" HeightRequest="150" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Opacity="0"/>
+            <ActivityIndicator x:Name="loading" Margin="20,70,20,0" IsRunning="true" Color="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" Opacity="0"/>        
+        </Grid>
+</ContentPage>

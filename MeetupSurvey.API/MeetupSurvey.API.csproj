@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>b19d67d1-2a0d-497e-92b6-370f335e834a</UserSecretsId>
+    <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Inflector.NetStandard" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Refit" Version="4.7.9" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="4.7.9" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\SurveyQuestionController.cs" />
+    <Compile Remove="DTO\AuthUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Default.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.PushNotifications\MeetupSurvey.PushNotifications.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ConfigOptions\" />
+  </ItemGroup>
+</Project>

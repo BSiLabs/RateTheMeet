@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="{StaticResource LightGray60}" 
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Survey.SurveyPage" 
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" 
+             xmlns:local="MeetupSurvey.Survey.SurveyPage"
+             xmlns:not="clr-namespace:MeetupSurvey.Infrastructure"
+             xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+             Visual="Default"
+             x:Name="page"
+             NavigationPage.HasNavigationBar="false">
+     
+<ContentPage.Resources>
+        <not:InverseBoolValueConverter x:Key="Not" />
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="carouselFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference carousel}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="headerFadeInAnimation"
+                                      Duration="650"
+                                      Target="{x:Reference header}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="navBarFadeInAnimation"
+                                      Duration="650"
+                                      Target="{x:Reference navBar}" />
+        
+        <xamanimation:FadeOutAnimation Easing="CubicOut"
+                                       Direction="Down"
+                                       x:Key="loadingFadeOutAnimation"
+                                       Duration="350"
+                                       Target="{x:Reference loading}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Down"
+                                      x:Key="titleLabelFadeInAnimation"
+                                      Duration="650"
+                                      Target="{x:Reference titleLabel}" />
+        
+     <ResourceDictionary>
+       <DataTemplate x:Key="questionTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                            <Label Grid.Row="1" Text="{Binding Name}" TextColor="White" Margin="20,0,20,10"/>
+                    
+               <StackLayout Grid.Row="2" Margin="20,0,20,0">
+                        
+                            <Frame HasShadow="false" BackgroundColor="white" CornerRadius="5">
+                                <StackLayout x:Name="starBinding" HorizontalOptions="Center" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding StarList}" >
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <ImageButton Source="{Binding Image}" 
+                                                         Command="{Binding Source={x:Reference starBinding}, Path=BindingContext.RatingSelected}" 
+                                                         CommandParameter="{Binding Index}" 
+                                                         Clicked="Star_OnClicked"
+                                                         BackgroundColor="Transparent">
+                                                <ImageButton.Triggers>
+                                                    <DataTrigger TargetType="ImageButton" Binding="{Binding IsOn}" Value="true">
+                                                        <Setter Property="Source" Value="star.png" />
+                                                    </DataTrigger>
+                                                </ImageButton.Triggers>
+                                            </ImageButton>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Frame>
+                        
+                            <Frame HasShadow="false" CornerRadius="5" Padding="10" BackgroundColor="White" Margin="0,8,0,0">
+                                <Editor BackgroundColor="White" Text="{Binding Comment, Mode=TwoWay}" 
+                                        Placeholder="{Binding Localize[Comment]}" VerticalOptions="FillAndExpand" 
+                                        HeightRequest="300"/>
+                            </Frame>
+                
+                        <lottie:AnimationView x:Name="AnimationView"
+                              Margin="0,-140,0,0"
+                              Animation="swipe.json"
+                              Loop="True"
+                              AutoPlay="true"
+                              Scale="1"
+                              VerticalOptions="CenterAndExpand"
+                              HorizontalOptions="EndAndExpand" 
+                              WidthRequest="200"
+                              HeightRequest="200"
+                              IsPlaying="{Binding CanSwipe}"
+                              IsVisible="{Binding CanSwipe}" InputTransparent="True"/>
+                           
+                  
+              </StackLayout>  
+                    
+                </Grid> 
+       </DataTemplate>
+       <DataTemplate x:Key="endTemplate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+              
+                        <StackLayout Grid.Row="1" Margin="15,40,15,0">
+                            <Frame HasShadow="false" BackgroundColor="white" CornerRadius="5">
+                                <StackLayout>
+                                 <Label Text="{Binding CompletionText}" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center"/>
+                                 <Image Source="surveyComplete.png" Margin="0,20" WidthRequest="100" HeightRequest="100"/>
+                                    <StackLayout Margin="60,0">
+                                        <Button Text="{Binding Localize[Submit]}" 
+                                                Style="{StaticResource BlueButton}"
+                                                TextColor="White"
+                                                FontSize="Medium"
+                                                FontAttributes="Bold"
+                                                Padding="8,0"
+                                                CornerRadius="23" 
+                                                Command="{Binding Source={x:Reference page}, Path=BindingContext.Submit}"/>
+                                    </StackLayout>
+                                
+                                </StackLayout>
+                               
+                            </Frame>
+                      
+                    </StackLayout>
+                </Grid>
+       </DataTemplate>
+            <local:SurveyTemplateSelector x:Key="surveyTemplateSelector" 
+                                          QuestionTemplate="{StaticResource questionTemplate}"
+                                          EndTemplate="{StaticResource endTemplate}"/>
+     </ResourceDictionary>
+</ContentPage.Resources>
+    
+    
+    <Grid x:Name="layout" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+            <Grid  x:Name="header" BackgroundColor="{StaticResource Blue}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Opacity="0">
+            <ffimageloading:CachedImage x:Name="bgImage" 
+                                        Source="{Binding BackgroundImage}" 
+                                        Opacity=".2" Aspect="AspectFill" 
+                                        VerticalOptions="FillAndExpand" 
+                                        HorizontalOptions="FillAndExpand"
+                                        DownsampleToViewSize="false"/>
+            
+            <ActivityIndicator x:Name="loading" IsRunning="true" Color="White" HorizontalOptions="End" VerticalOptions="Start" Opacity="1" Visual="Material">
+                <ActivityIndicator.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,10,0,0" />
+                        <On Platform="Android" Value="0,20,0,0" />
+                    </OnPlatform>
+                </ActivityIndicator.Margin>
+            </ActivityIndicator>
+        </Grid>
+         
+        <StackLayout x:Name="navBar" Margin="0,7,0,0" Orientation="Horizontal" VerticalOptions="Start" Opacity="0"> 
+            
+            <Button Text="{x:Static icons:IconFont.AngleLeft}" TextColor="White" FontSize="40" FontFamily="{DynamicResource FontAwesome}" BackgroundColor="Transparent" 
+                        HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding Source={x:Reference page}, Path=BindingContext.GoBack}" >
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="10,0,10,0" />
+                            <On Platform="Android" Value="-15,0,0,0" />
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
+            
+            <Label x:Name="titleLabel" Margin="0" Text="{Binding SurveyName}" Style="{StaticResource Header}" FontSize="Large" Opacity="0" LineBreakMode="TailTruncation">
+                <Label.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,0,0" />
+                        <On Platform="Android" Value="-23,0,0,0" />
+                    </OnPlatform>
+                </Label.Margin>
+            </Label>
+            
+      </StackLayout>
+        
+        
+    <controls:CarouselViewControl x:Name="carousel"
+                                  Orientation="Horizontal" 
+                                  InterPageSpacing="10" 
+                                  ItemsSource="{Binding SurveyQuestions}" 
+                                  HorizontalOptions="FillAndExpand" 
+                                  ShowIndicators="true"
+                                  CurrentPageIndicatorTintColor="{StaticResource Secondary}" 
+                                  BackgroundColor="Transparent"
+                                  Position="{Binding Position, Mode=TwoWay}"
+                                  IsSwipeEnabled="{Binding CanSwipe}"
+                                  ItemTemplate="{StaticResource surveyTemplateSelector}"
+                                  Grid.Row="1"
+                                  IsVisible="false"
+                                  Margin="0,-90,0,0"
+                                  Opacity="0">
+    </controls:CarouselViewControl>
+        
+        
+        
+            
+                
+        
+   </Grid> 
+    
+
+</ContentPage>

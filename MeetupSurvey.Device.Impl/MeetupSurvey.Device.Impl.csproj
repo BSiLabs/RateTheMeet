@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;API</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
+    <PackageReference Include="ReactiveUI" Version="9.12.1" />
+    <PackageReference Include="System.Reactive" Version="4.1.3" />
+    <PackageReference Include="ReactiveUI.Fody" Version="9.12.1" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Acr.Settings" Version="9.0.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="MainPage.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.DTO\MeetupSurvey.DTO.csproj" />
+  </ItemGroup>
+</Project>

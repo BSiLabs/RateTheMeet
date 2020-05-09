@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:converters="clr-namespace:MeetupSurvey.Infrastructure"
+             x:Class="MeetupSurvey.Survey.ArchiveListPage"
+             x:Name="page" 
+             BackgroundColor="{StaticResource LightGray60}"
+             Visual="Material">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Archived Surveys" Style="{StaticResource Header}" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+    
+     <ContentPage.Resources>
+        
+        <converters:InverseBoolValueConverter x:Key="Not" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="listFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference mainList}" />
+        
+        <xamanimation:FadeOutAnimation  Easing="CubicIn" 
+                                        x:Key="loadingFadeOutAnimation"
+                                        Direction="Up"
+                                        Duration="350"
+                                        Target="{x:Reference loading}" />
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+       <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <BoxView VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Blue}"/>
+            
+                   <ActivityIndicator IsRunning="true" x:Name="loading" Color="White" VerticalOptions="Center" HorizontalOptions="Center"  Margin="0,0,0,0"/>
+                
+              
+                        <ListView x:Name="mainList"
+                                  RefreshControlColor="White"
+                                  ItemsSource="{Binding GroupedSurveyList}"
+                                  SeparatorVisibility="None"
+                                  BackgroundColor="Transparent"
+                                  IsGroupingEnabled="True"
+                                  RefreshCommand="{Binding LoadCommand}" 
+                                  IsRefreshing="{Binding IsRefreshing}" 
+                                  IsPullToRefreshEnabled="true"
+                                  HasUnevenRows="true" 
+                                  Margin="0,-100,0,0"
+                                  Opacity="0"
+                                  Grid.Row="1"
+                                  SelectionMode="None"
+                                  CachingStrategy="RecycleElement"
+                                  ItemTemplate="{StaticResource SurveyTemplate}"
+                                  GroupHeaderTemplate="{StaticResource GroupTemplate}">
+                                    <ListView.RefreshControlColor>
+                                        <OnPlatform Android="{StaticResource Primary}" iOS="White"/>
+                                    </ListView.RefreshControlColor>>
+                        </ListView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

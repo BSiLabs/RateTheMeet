@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primarycol">#0061FF</color>
+    <color name="notification_col">@color/primarycol</color>
+</resources>

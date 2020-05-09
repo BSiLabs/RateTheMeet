@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="{StaticResource LightGray60}"
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Survey.EditPrizePage"
+             xmlns:behaviors="clr-namespace:MeetupSurvey.Behaviors" 
+             xmlns:local="clr-namespace:MeetupSurvey.Infrastructure" 
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+             x:Name="page"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             NavigationPage.HasNavigationBar="false"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             Visual="Default">
+    
+    <ContentPage.Resources>
+        <behaviors:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+        <local:InverseBoolValueConverter x:Key="Not" /> 
+        <local:BoolToOpacityConverter x:Key="BoolToOpacityConverter" /> 
+        <local:IsNullToBoolConverter x:Key="IsNullToBoolConverter" /> 
+        
+        
+        <xamanimation:FadeToAnimation Easing="CubicOut" Opacity="1" 
+                                      x:Key="buttonFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference newPrizeButton}" />
+        
+        <xamanimation:FadeToAnimation Easing="CubicIn" Opacity="0"
+                                      x:Key="buttonFadeOutAnimation"
+                                      Duration="200"
+                                      Target="{x:Reference newPrizeButton}" />
+        
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut" 
+                                      x:Key="stackLayoutFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference stackLayout}" />
+        
+        <xamanimation:FadeToAnimation Easing="CubicIn" 
+                                      x:Key="loadingFadeOutAnimation"
+                                      Opacity="0"
+                                      Duration="450"
+                                      Target="{x:Reference loading}" />
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut" 
+                                      x:Key="loadingFadeInAnimation"
+                                      Direction="Down"
+                                      Duration="450"
+                                      Target="{x:Reference loading}" />
+        
+        <xamanimation:FadeToAnimation Easing="CubicOut" 
+                                      x:Key="loadingFadeToAnimation"
+                                      Opacity="1"
+                                      Duration="450"
+                                      Target="{x:Reference loading}" />
+        
+    </ContentPage.Resources>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        
+           <Grid x:Name="layout" Padding="0" Margin="0" Grid.Row="0" Opacity="1" VerticalOptions="Start" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource Blue}" HeightRequest="60">
+        <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                
+                <Image x:Name="bgImage" Source="{Binding BackgroundImage}" Opacity=".2" Grid.ColumnSpan="4" Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                
+                <ActivityIndicator IsRunning="true" x:Name="loading" Color="White" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Grid.ColumnSpan="4" Visual="Material" Margin="0,0,0,0" IsVisible="{Binding IsLoading}"/>
+                
+                <Button Margin="-20,0,0,0" Text="{x:Static icons:IconFont.AngleLeft}" Style="{StaticResource BackButton}" Command="{Binding GoBack}" />
+                
+                <Label x:Name="surveyHeader" Grid.Column="1" Text="{Binding SurveyName}" LineBreakMode="TailTruncation" MaxLines="1" TextColor="White" FontSize="Micro" VerticalOptions="Center" Margin="-5,-30,0,0" Opacity="1" />
+                <Label x:Name="titleHeader" Grid.Column="1" Text="{Binding PageName}" Style="{StaticResource Header}"  LineBreakMode="TailTruncation" MaxLines="1" VerticalOptions="Center" Margin="-5,5,0,0" Opacity="1" />
+                    
+    
+                <Button Grid.Column="2" x:Name="SaveButton" Style="{StaticResource ToolBarButton}" Margin="0,0,-10,0"
+                        Text="{x:Static icons:IconFont.Save}" Command="{Binding SavePrizes}" Opacity="{Binding IsSaving, Converter={StaticResource BoolToOpacityConverter},ConverterParameter=invert}"
+                        IsVisible="{Binding HasChanged}" IsEnabled="{Binding IsLoading, Converter={StaticResource Not}}"/>
+                
+                <!--<Button Grid.Column="3" x:Name="ellipsis" Text="{x:Static icons:IconFont.EllipsisV}" Margin="0,0,-20,0" Opacity="{Binding IsLoading, Converter={StaticResource BoolToOpacityConverter},ConverterParameter=invert}"
+                        Command="{Binding More}" Style="{StaticResource EllipsisButton}" />-->
+   </Grid>
+            
+        
+        <ListView Visual="Default" x:Name="stackLayout" BackgroundColor="Transparent" Grid.Row="1" 
+                  Margin="0,-50,0,0" VerticalOptions="FillAndExpand" ItemsSource="{Binding Survey.PrizeList}"
+                  Opacity="0" HasUnevenRows="true" SeparatorVisibility="None">
+                                        <ListView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.ItemSelected}"/>
+                                            </ListView.GestureRecognizers>
+            <ListView.Footer>
+                        <Grid HeightRequest="100"/>
+                </ListView.Footer>
+                        <ListView.ItemTemplate>
+                
+                            <DataTemplate>
+                    <ViewCell>
+                                <Grid Margin="15,4">
+                                    <Grid.GestureRecognizers> 
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.ItemSelected}" CommandParameter="{Binding}" />
+                                    </Grid.GestureRecognizers>
+                                    <Frame Padding="0" HasShadow="true" Visual="Material">
+                                        <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="300"/>
+                                        </Grid.RowDefinitions>
+                                    
+                                    <Frame  Padding="0" HasShadow="true" Visual="Material" Grid.Row="1" >
+                                        
+                                        <Grid InputTransparent="{Binding Photo, Converter={StaticResource IsNullToBoolConverter}}">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference page}, Path=BindingContext.PhotoOptions}" CommandParameter="{Binding}" />
+                                            </Grid.GestureRecognizers>
+                                                <ffimageloading:CachedImage  HeightRequest="300" DownsampleHeight="300" 
+                                                            HorizontalOptions="FillAndExpand" 
+                                                            Aspect="AspectFill" 
+                                                            VerticalOptions="StartAndExpand" 
+                                                            DownsampleToViewSize="true" 
+                                                            Source="{Binding Photo}" FadeAnimationForCachedImages="true"
+                                                            FadeAnimationEnabled="true" InputTransparent="true">
+                                                </ffimageloading:CachedImage>
+                                            </Grid>
+                                        </Frame>
+                                    
+                                    <Label Grid.Row="1" Text="{Binding Localize[AddPhoto]}" TextColor="{StaticResource Primary}" VerticalOptions="Center" 
+                                           IsVisible="{Binding Photo, Converter={StaticResource IsNullToBoolConverter}}"
+                                           HorizontalOptions="Center" Margin="0,-50,0,0"/>
+                                    <Button Grid.Row="1" Text="{x:Static icons:IconFont.Plus}" FontFamily="{DynamicResource FontAwesome}" BackgroundColor="Transparent"
+                                            ContentLayout="Bottom,10"
+                                                    Style="{StaticResource ToolBarButton}" IsVisible="{Binding Photo, Converter={StaticResource IsNullToBoolConverter}}"
+                                                    FontSize="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  
+                                                    TextColor="{StaticResource Primary}" android:VisualElement.Elevation="10" 
+                                                    Command="{Binding Source={x:Reference page}, Path=BindingContext.GetPhoto}" CommandParameter="{Binding}">
+                                        <!--<Button.ImageSource>
+                                            <FontImageSource FontFamily="{DynamicResource FontAwesome}"
+                                                             Glyph="{x:Static icons:IconFont.Plus}"
+                                                             Size="20"
+                                                             Color="{StaticResource Primary}" />
+                                            </Button.ImageSource>-->
+                                        </Button>
+                                     
+                                    
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal" Margin="15,15,0,0">
+                                            <Label
+                        VerticalOptions="Center" VerticalTextAlignment="Center"
+                        Text="{x:Static icons:IconFont.Award}" 
+                        FontFamily="{DynamicResource FontAwesome}" 
+                        FontSize="20" 
+                        HorizontalOptions="Start"
+                        TextColor="{StaticResource Primary}"
+                        InputTransparent="true"/>
+                                            <Label FontSize="Medium" TextColor="{StaticResource Primary}" VerticalTextAlignment="Center"
+                                                   FontAttributes="Bold" Margin="5,0,0,0" HorizontalOptions="Start" VerticalOptions="Center" InputTransparent="true" >
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Prize "/>
+                                                        <Span Text="{Binding Order}"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                    
+                                            <Editor  Opacity=".8" Visual="Default"
+                                                    Margin="10,0,10,0" Text="{Binding Name}" Placeholder="{Binding Localize[PrizeName]}" BackgroundColor="White" 
+                                                    VerticalOptions="End" AutoSize="TextChanges" SizeChanged="Entry_Loaded" Unfocused="Handle_Unfocused"
+                                                    Focused="Handle_Focused" />
+                                            </StackLayout>
+                                    
+                                        <Button Text="{x:Static icons:IconFont.Trash}" FontFamily="{DynamicResource FontAwesome}" BackgroundColor="Transparent"
+                                                    Style="{StaticResource ToolBarButton}" 
+                                                    IsVisible="{Binding IsSelected}"
+                                                    FontSize="20" VerticalOptions="Start" HorizontalOptions="End"  
+                                                    TextColor="{StaticResource Primary}" android:VisualElement.Elevation="10" 
+                                                    Command="{Binding Source={x:Reference page}, Path=BindingContext.DeletePrize}" CommandParameter="{Binding}"/>
+                                        
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                        </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                 </ListView>
+        
+        
+            <controls:FloatingFrameRound x:Name="newPrizeButton" Grid.RowSpan="2"  CornerRadius="23" Margin="20,30" HorizontalOptions="End" 
+                   VerticalOptions="End" Padding="0" HasShadow="true" Opacity="0" >
+                <Grid>
+                
+                                <Button Visual="Material" Text="{Binding Localize[AddPrize]}" Style="{StaticResource BlueButton}" FontAttributes="Bold" ContentLayout="Left,20" CornerRadius="23"
+                        Command="{Binding AddPrize}" Padding="40,0,10,0" Clicked="NewPrize_Clicked"  Margin="0" />
+                <Label android:VisualElement.Elevation="10" 
+                        VerticalOptions="Center" 
+                        Text="{x:Static icons:IconFont.Plus}" 
+                        FontFamily="{DynamicResource FontAwesome}"
+                        FontSize="25"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Center"
+                        WidthRequest="60"
+                        TextColor="White"   
+                        InputTransparent="true"/>
+                        
+                
+                <!--<Button Visual="Material" Text="{Binding Localize[AddPrize]}" Style="{StaticResource BlueButton}" FontAttributes="Bold" ContentLayout="Left,10" CornerRadius="23"
+                        Command="{Binding AddPrize}" Padding="0,0,10,0" Clicked="NewPrize_Clicked"  Margin="0">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="{DynamicResource FontAwesome}"
+                                         Glyph="{x:Static icons:IconFont.Plus}"
+                                         Size="25"
+                                         Color="White" />
+                        </Button.ImageSource>
+                    </Button>-->
+                </Grid>
+            </controls:FloatingFrameRound>
+            
+        </Grid>
+</ContentPage>

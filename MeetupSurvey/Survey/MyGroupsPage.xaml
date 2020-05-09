@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             Visual="Material"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:page="MeetupSurvey.Survey.SurveyListPage"
+             xmlns:local="clr-namespace:MeetupSurvey.Theming.Templates" 
+             x:Class="MeetupSurvey.Survey.MyGroupsPage" 
+             BackgroundColor="{StaticResource LightGray60}">
+    <ContentPage.Resources>
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      Direction="Up"
+                                      x:Key="listFadeInAnimation"
+                                      Duration="500"
+                                      Target="{x:Reference mainList}" />
+        
+        <xamanimation:FadeOutAnimation Easing="CubicIn"
+                                       Direction="Up"
+                                       x:Key="loadingFadeOutAnimation"
+                                       Duration="350"
+                                       Target="{x:Reference loading}" />
+    </ContentPage.Resources>
+            
+    
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding Localize[MyGroups]}" Style="{StaticResource Header}" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+    
+    
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+           
+        <BoxView VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Blue}" Grid.Row="0"/>
+        <ActivityIndicator IsRunning="true" x:Name="loading" Color="White" VerticalOptions="Center" HorizontalOptions="Center"  Margin="0,0,0,0" Grid.Row="0"/>
+            <Frame HasShadow="false" BackgroundColor="Transparent" CornerRadius="5" Margin="0,-100,0,0" Padding="0" Grid.Row="1">
+                    <ListView x:Name="mainList" 
+                              
+                              SeparatorVisibility="None" 
+                              BackgroundColor="Transparent" 
+                              RefreshCommand="{Binding LoadGroups}" 
+                              IsRefreshing="{Binding IsRefreshing}" 
+                              IsPullToRefreshEnabled="true" 
+                              HasUnevenRows="true" 
+                              Margin="0,0,0,0"
+                              Opacity="0" 
+                              SelectionMode="None"
+                              ItemTemplate="{StaticResource GroupTemplate}"
+                              ItemsSource="{Binding GroupList}">
+                    </ListView>
+            </Frame>
+    </Grid>
+</ContentPage>

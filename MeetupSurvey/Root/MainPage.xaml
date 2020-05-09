@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" 
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                  x:Class="MeetupSurvey.Root.MainPage" 
+                  x:Name="page" 
+                  xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+                  xmlns:view="clr-namespace:MeetupSurvey.Survey;assembly=MeetupSurvey"
+                  xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                  xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                  xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                  BackgroundColor="{StaticResource Secondary}">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu" Icon="hamburger.png" BackgroundColor="{StaticResource PrimaryDark}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            
+                <Grid Margin="0,0,0,10" Padding="0,60,0,0" BackgroundColor="{StaticResource PrimaryLight}" LayoutChanged="Handle_LayoutChanged">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <BoxView BackgroundColor="{StaticResource PrimaryLight}"/>
+                    <BoxView BackgroundColor="{StaticResource PrimaryDark}" Grid.Row="1"/>
+                    
+                    <StackLayout Visual="Material"  Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="Center" Padding="0">
+                        <Grid Padding="0" HeightRequest="75" WidthRequest="75">
+                        <BoxView CornerRadius="39" WidthRequest="75" HeightRequest="75" BackgroundColor="White" HorizontalOptions="Center" />
+                                            <ffimageloading:CachedImage HorizontalOptions="Center" Margin="0"
+                                                                        Aspect="AspectFill"
+                                                                        DownsampleToViewSize="true"
+                                                                        HeightRequest="75"
+                                                                        WidthRequest="75"
+                                                                        Source="{Binding ProfileImage}">
+                                                    <ffimageloading:CachedImage.Transformations>  
+                                                        <ffTransformations:CircleTransformation BorderSize="10" BorderHexColor="#FFFFFF"/>  
+                                                    </ffimageloading:CachedImage.Transformations>  
+                                            </ffimageloading:CachedImage>
+                            
+                            </Grid>
+                        <Label Text="{Binding ProfileName}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" TextColor="White" Margin="5" FontFamily="Comfortaa"/>                              
+                    </StackLayout>
+                </Grid>
+                
+                
+                
+                <StackLayout Padding="0,10,0,10" Margin="0,0,0,0" BackgroundColor="{StaticResource PrimaryDark}" VerticalOptions="FillAndExpand" Grid.Row="1">
+
+                    <BoxView HeightRequest="1" BackgroundColor="white" Margin="20,0,20,0" Opacity="0.7"/>
+
+                    <ListView ItemsSource="{Binding MenuItems}" 
+                              SeparatorColor="Transparent" 
+                              RowHeight="60" SeparatorVisibility="Default" 
+                              BackgroundColor="Transparent"
+                              SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Margin="8,4">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Click}" />
+                                        </Grid.GestureRecognizers>
+                                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="20,8,0,8" Spacing="20">
+                                              
+                                                <Label FontFamily="{Binding FontFamily}"
+                                                                Text="{Binding Icon}"
+                                                                FontSize="30"
+                                                                TextColor="White"
+                                                                WidthRequest="48"
+                                                                HorizontalTextAlignment="Center"
+                                                                HorizontalOptions="Center"
+                                                                VerticalOptions="Center"/>
+                                                <Label  Text="{Binding Title}" TextColor="White" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" />
+                                               
+                                            </StackLayout>
+                                        <Image Source="angleRight.png" Margin="15" WidthRequest="15" HeightRequest="20" HorizontalOptions="End"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                    <BoxView HeightRequest="1" BackgroundColor="white" Margin="20,0,20,10" Opacity="0.7"/>
+                    
+                    
+                    <Grid VerticalOptions="End" HorizontalOptions="CenterAndExpand" >
+                        <Button HorizontalOptions="Center"
+                                BackgroundColor="Transparent"
+                                Text="Share" 
+                                Command="{Binding ShareApp}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Padding="50,0,15,0"
+                                Visual="Default" />
+                        <Label VerticalOptions="Center" Text="{x:Static icons:IconFont.Share}" 
+                               android:VisualElement.Elevation="10"
+                               FontFamily="{DynamicResource FontAwesome}"
+                               FontSize="25"
+                               Margin="-50,0,0,0"
+                               HorizontalOptions="Center"
+                               TextColor="White"   
+                               InputTransparent="true"/>
+                    </Grid>
+
+                    
+                    
+                    <!--<Grid VerticalOptions="End" HorizontalOptions="CenterAndExpand" >
+                        <Button HorizontalOptions="Center"
+                                BackgroundColor="Transparent"
+                                Text="Share" 
+                                Command="{Binding ShareApp}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Padding="15,0,15,0"
+                                Visual="Default" >
+                                <Button.ImageSource>
+                                    <FontImageSource FontFamily="{DynamicResource FontAwesome}"
+                                                Glyph="{x:Static icons:IconFont.Share}"
+                                                Size="25" />
+                                </Button.ImageSource>
+                        </Button>
+                    </Grid>-->
+                    
+                   
+                    <!-- Admin/ user switch -->
+                    
+                <StackLayout IsVisible="{Binding ShowAdminToggle}">
+                    <StackLayout Orientation="Horizontal" Margin="20,0,0,0" HorizontalOptions="Center" >
+                    <Label Text="Force Admin" TextColor="White" VerticalOptions="Center"/>
+                    <Switch x:Name="adminSwitch" IsToggled="{Binding IsAdmin}" Toggled="Handle_Toggled" VerticalOptions="Center"/>
+                </StackLayout>
+                    <Button Text="Clear Backend Cache" Command="{Binding ClearCache}" Style="{StaticResource BlueButton}"/>
+                </StackLayout>
+                    
+                    
+                    <StackLayout HeightRequest="50"  Padding="0,0,0,15" Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="{Binding Source={x:Reference page}, Path=BindingContext.Localize[PoweredBy]}" FontSize="Micro" 
+                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <ImageButton Source="bsiLabsLogoWhite.png" WidthRequest="80" Margin="3" HorizontalOptions="Center" 
+                                     VerticalOptions="Center" BackgroundColor="Transparent" Command="{Binding GoToWebsite}"/> 
+                    </StackLayout>
+                        
+                        
+                    
+
+                    
+                  
+               
+                    
+            </StackLayout>
+                
+            </Grid>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage Title="">
+        </ContentPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

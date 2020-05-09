@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="{StaticResource LightGray60}" 
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="MeetupSurvey.Survey.SurveyListPage" 
+             xmlns:controls="clr-namespace:MeetupSurvey.Controls"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:converters="clr-namespace:MeetupSurvey.Infrastructure"
+             xmlns:icons="clr-namespace:MeetupSurvey.Theming"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:local="clr-namespace:MeetupSurvey.Survey"
+             Visual="Material"
+             x:Name="page">
+    
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding Localize[CurrentSurveys]}" Style="{StaticResource Header}" FontFamily="Open-Sans" FontAttributes="Bold" />
+                
+        </StackLayout>
+    </NavigationPage.TitleView>
+    
+    <ContentPage.Resources>
+        <converters:InverseBoolValueConverter x:Key="Not" />
+        
+        <xamanimation:FadeToAnimation Easing="CubicOut"
+                                      x:Key="buttonFadeInAnimation"
+                                      Duration="300"
+                                      Opacity="1"
+                                      Target="{x:Reference newSurveyButton}" />
+                                     
+        
+        <xamanimation:FadeInAnimation Easing="CubicOut"
+                                      x:Key="listFadeInAnimation"
+                                      Duration="600"
+                                      Target="{x:Reference mainList}" />
+        
+        <xamanimation:FadeToAnimation Easing="CubicOut" Opacity="0"
+                                      x:Key="buttonFadeOutAnimation"
+                                      Duration="200"
+                                      Target="{x:Reference newSurveyButton}" />
+        
+        
+        <xamanimation:FadeToAnimation Easing="CubicOut"
+                                      x:Key="buttonFadeBackInAnimation"
+                                      Duration="300"
+                                      Opacity="1"
+                                      Target="{x:Reference newSurveyButton}" />
+        
+        
+        <xamanimation:FadeOutAnimation Easing="CubicIn" 
+                                      x:Key="loadingFadeOutAnimation"
+                                      Direction="Up"
+                                      Duration="350"
+                                      Target="{x:Reference loading}" />
+        
+       
+        
+    </ContentPage.Resources>
+
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+             
+        
+            <BoxView VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Blue}"/>
+        
+            <ActivityIndicator IsRunning="true" x:Name="loading" Color="White" VerticalOptions="Center" HorizontalOptions="Center"  Margin="0,0,0,0"/>
+                        
+                               
+                        <ListView x:Name="mainList"
+                                  ItemsSource="{Binding GroupedSurveyList}"
+                                  SeparatorVisibility="None"
+                                  BackgroundColor="Transparent"
+                                  IsGroupingEnabled="True"
+                                  RefreshCommand="{Binding PullToRefreshCommand}" 
+                                  IsRefreshing="{Binding IsRefreshing}" 
+                                  IsPullToRefreshEnabled="{Binding IsRefreshing, Converter={StaticResource Not}}"
+                                  HasUnevenRows="true" 
+                                  Margin="0,-100,0,0"
+                                  Opacity="0"
+                                  Grid.Row="1"
+                                  SelectionMode="None"
+                                  CachingStrategy="RecycleElement"
+                                  IsEnabled="{Binding IsTapEnabled}"
+                                  ItemTemplate="{StaticResource SurveyTemplate}"
+                                  GroupHeaderTemplate="{StaticResource GroupTemplate}">
+                                    <ListView.RefreshControlColor>
+                                        <OnPlatform Android="{StaticResource Primary}" iOS="White"/>
+                                    </ListView.RefreshControlColor>
+                        </ListView>
+                      
+           
+        
+        
+        
+             <controls:FloatingFrameRound x:Name="newSurveyButton" CornerRadius="23" Margin="20,30" HorizontalOptions="End" 
+                   VerticalOptions="End" Padding="0" HasShadow="true" Opacity="0" Grid.RowSpan="2" IsVisible="{Binding AdminOfAnyGroup}">  
+            <Grid>
+                    <Button HorizontalOptions="End" 
+                            VerticalOptions="End" 
+                            Style="{StaticResource BlueButton}" 
+                            Text="{Binding Localize[NewSurvey]}" 
+                            FontAttributes="Bold"
+                            Command="{Binding NavigateToNewSurvey}"
+                            CommandParameter="{x:Null}" 
+                            Padding="40,0,10,0"
+                            Margin="0"
+                            ContentLayout="Left,20"
+                            IsEnabled="{Binding CanEdit}"/>
+                <Label VerticalOptions="Center" Text="{x:Static icons:IconFont.Plus}" 
+                       android:VisualElement.Elevation="10"
+                       FontFamily="{DynamicResource FontAwesome}"
+                       FontSize="25"
+                       HorizontalOptions="Start"
+                       HorizontalTextAlignment="Center"
+                       WidthRequest="60"
+                       TextColor="White"   
+                       InputTransparent="true"/>
+                
+                </Grid>
+            
+            </controls:FloatingFrameRound>
+    </Grid>
+    
+</ContentPage>

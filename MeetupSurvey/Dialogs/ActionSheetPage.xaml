@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MeetupSurvey.Dialogs.ActionSheetPage"
+              xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+              xmlns:rga="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+              CloseWhenBackgroundIsClicked="false">
+    <rg:PopupPage.Animation>
+        <rga:ScaleAnimation PositionIn="Bottom"
+                            PositionOut="Bottom"
+                            ScaleIn="1.2"
+                            ScaleOut="0.8"
+                            DurationIn="300"
+                            DurationOut="250"
+                            EasingIn="CubicOut"
+                            EasingOut="CubicIn"
+                            HasBackgroundAnimation="True"/>
+    </rg:PopupPage.Animation>
+    
+    <rg:PopupPage.Content>
+            <Frame Margin="20,20,20,5" 
+                  Padding="0" HasShadow="false"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="End"
+                  BackgroundColor="Transparent" >
+            
+            <StackLayout>
+                
+                <Frame Padding="10" HasShadow="false" CornerRadius="20" BorderColor="{StaticResource Primary}" >
+                <StackLayout>
+                        <Label Margin="12" Text="{Binding Title}" HorizontalTextAlignment="Center" TextColor="{StaticResource PrimaryDark}" FontSize="Medium" Opacity=".7"/>
+                        <ScrollView>
+                        <Grid Margin="0,0,0,0" Opacity=".8" BackgroundColor="{StaticResource LightGray60}" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+                        
+                    <StackLayout BindableLayout.ItemsSource="{Binding ItemList}" VerticalOptions="Center" Margin="0,8">
+                            
+                    <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                    <Grid Margin="4" Padding="8">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Action}" />
+                                        </Grid.GestureRecognizers>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                            <Label Text="{Binding Text}" HorizontalTextAlignment="Center" FontSize="Small" TextColor="{StaticResource Primary}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            
+                    </StackLayout>
+                     </ScrollView>  
+                </StackLayout>
+                </Frame>
+                
+                
+                <Button Text="{Binding CancelText}" Margin="0" TextColor="White" CornerRadius="20" FontAttributes="Bold" Padding="10" Command="{Binding Cancel}" BackgroundColor="{StaticResource Primary}"/>
+            </StackLayout>
+            </Frame>
+    </rg:PopupPage.Content>
+</rg:PopupPage>
