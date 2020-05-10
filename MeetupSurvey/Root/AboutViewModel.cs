@@ -20,7 +20,7 @@ namespace MeetupSurvey.Root
             _navigationService = navigationService;
             _core = core;
 
-            Version = $"Version {VersionTracking.CurrentVersion}";
+            Version = $"Version {core.VersionInfo.CurrentVersion}";
 
             LogIssue = ReactiveCommand.CreateFromTask(async () =>
             {

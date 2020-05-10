@@ -1,0 +1,56 @@
+@page "/archive"
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+
+<div class="row">
+    <div class="col">
+        <h1 class="mt-4 ml-4">Archived Surveys</h1>
+        <ul class="list-view">
+
+            @if (SurveyList != null && SurveyList.Any())
+            {
+                @foreach (var survey in SurveyList)
+                {
+                    <SurveyListItem survey="@survey" />
+                }
+            }
+
+        </ul>
+    </div>
+</div>
+
+
+@code
+{
+
+    List<SurveyDTO> SurveyList = new List<SurveyDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync");
+
+        try
+        {
+            const string surveysUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
+
+            var name = "access_token";
+            var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
+
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+            var surveyList = await httpClient.GetJsonAsync<List<SurveyDTO>>(surveysUri);
+            SurveyList = surveyList.Where(survey => survey.HasCompleted).ToList();
+        }
+        catch (HttpRequestException ex)
+        {
+            await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
+        }
+        catch (Exception ex)
+        {
+            await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+        }
+
+        Console.WriteLine($"SurveyList.Count {SurveyList?.Count}");
+    }
+
+}

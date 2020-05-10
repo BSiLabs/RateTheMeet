@@ -1,0 +1,97 @@
+﻿<nav class="navbar p-2 navbar-light fixed-top bg-light flex-md-nowrap p-0 shadow">
+    <div class="navbar-brand col mr-0">
+        <img src="/Images/RateTheMeet_logo.png" width="150" id="logo" alt="Rate The Meet logo" />
+    </div>
+    <div class="flex-column">
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <i class="far fa-bars"></i>
+        </button>
+            <button class="user-area shadow rounded-circle p-0" @onclick="ToggleUserArea">
+                <img src="/Images/Profile.png" width="80" class="rounded-circle"/>
+            </button>
+            <div class="@UserAreaClass user-area-dropdown">
+                <label class="dropdown-item disabled pt-1">4 Surveys Completed</label>
+                <div class="dropdown-divider p-0"></div>
+                <a class="dropdown-item primary-blue-text" href="logout">Logout</a>
+            </div>
+    </div>
+</nav>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="current">
+                <span aria-hidden="true"></span> <i class="far fa-home fa-fw feather" />Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="archive">
+                <span aria-hidden="true"></span> <i class="far fa-bookmark fa-fw feather" />Archive
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="mygroups">
+                <span aria-hidden="true"></span> <i class="fab fa-meetup fa-fw feather" />My Groups
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="about">
+                <span aria-hidden="true"></span> <i class="far fa-user-astronaut fa-fw feather" /> About
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="logout" >
+                <span aria-hidden="true"></span> <i class="far fa-door-open fa-fw feather" /> Logout
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+
+<div class="static-sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="current">
+                <span aria-hidden="true"></span> <i class="far fa-home fa-fw feather" />Home
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="archive">
+                <span aria-hidden="true"></span> <i class="far fa-bookmark fa-fw feather" />Archive
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="mygroups">
+                <span aria-hidden="true"></span> <i class="fab fa-meetup fa-fw feather" />My Groups
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="about">
+                <span aria-hidden="true"></span> <i class="far fa-user-astronaut fa-fw feather" /> About
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+
+
+@functions {
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    bool collapseUserArea = true;
+
+    string UserAreaClass => collapseUserArea ? "collapse" : null;
+
+    void ToggleUserArea()
+    {
+        collapseUserArea = !collapseUserArea;
+    }
+}

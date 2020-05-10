@@ -22,6 +22,9 @@ namespace MeetupSurvey.Device.Impl
                 .Register(_ => CrossSettings.Current.Bind<AppSettings>())
                 .As<IAppSettings>()
                 .SingleInstance();
+
+            builder
+                .RegisterType<VersionInfo>().As<IVersionInfo>().SingleInstance();
         }
     }
 }

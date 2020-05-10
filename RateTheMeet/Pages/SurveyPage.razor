@@ -1,0 +1,197 @@
+@*@page "/surveypage"*@
+@page "/surveypage/{SurveyId}/"
+@inject IJSRuntime JsRuntime;
+@using MeetupSurvey.Core.Data;
+@*@inject ISurveyService surveyService;*@
+
+<div class="row">
+    <a href="current" class="mt-3 ml-4 pr-3"><i class="far fa-angle-left mt-1" /></a><h1 class="mt-3">Survey Name</h1>
+</div>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+    <ol class="carousel-indicators align-bottom">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    </ol>
+    <div class="carousel-inner">
+        @foreach (var question in QuestionList)
+        {
+        <div class="carousel-item active">
+            <p>@question.Name</p>
+            @*<SimpleButton Clicked="@(async () => await HandleRedraw())">Redraw</SimpleButton>*@
+            @*<LineChart ref="lineChart" TItem="double" />*@
+            <div class="bg-blue star-rating-container rounded text-center pt-3">
+                <img src="@starImage1" class="empty-star" @onclick="Handle_Clicked1" />
+                <img src="@starImage2" class="empty-star" @onclick="Handle_Clicked2" />
+                <img src="@starImage3" class="empty-star" @onclick="Handle_Clicked3" />
+                <img src="@starImage4" class="empty-star" @onclick="Handle_Clicked4" />
+                <img src="@starImage5" class="empty-star" @onclick="Handle_Clicked5" />
+            </div>
+            <div class="bg-white rounded white-container text-center m-auto">
+                <textarea placeholder="Comment"></textarea>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+@code {
+
+[Parameter]
+public string SurveyId { get; set; }
+List<QuestionDTO> QuestionList = new List<QuestionDTO>();
+
+protected override async Task OnInitializedAsync()
+{
+    Console.WriteLine("OnInitializedAsync");
+    //var survey = await surveyService.GetSurvey(SurveyId);
+    //QuestionList = (survey.Questions.OrderBy(x => x.Order)).ToList();
+}
+
+
+public string starImage1 = "/Images/emptystar.png";
+public string starImage2 = "/Images/emptystar.png";
+public string starImage3 = "/Images/emptystar.png";
+public string starImage4 = "/Images/emptystar.png";
+public string starImage5 = "/Images/emptystar.png";
+
+private void Handle_Clicked1()
+{
+    if (starImage1.Equals("/Images/emptystar.png"))
+    {
+        starImage1 = "/Images/star.png";
+    }
+    else
+    {
+        starImage1 = "/Images/emptystar.png";
+        starImage2 = "/Images/emptystar.png";
+        starImage3 = "/Images/emptystar.png";
+        starImage4 = "/Images/emptystar.png";
+        starImage5 = "/Images/emptystar.png";
+    }
+}
+
+private void Handle_Clicked2()
+{
+
+    if (starImage2.Equals("/Images/emptystar.png"))
+    {
+        starImage1 = "/Images/star.png";
+        starImage2 = "/Images/star.png";
+    }
+    else
+    {
+        starImage1 = "/Images/emptystar.png";
+        starImage2 = "/Images/emptystar.png";
+        starImage3 = "/Images/emptystar.png";
+        starImage4 = "/Images/emptystar.png";
+        starImage5 = "/Images/emptystar.png";
+    }
+}
+
+private void Handle_Clicked3()
+{
+
+    if (starImage3.Equals("/Images/emptystar.png"))
+    {
+        starImage1 = "/Images/star.png";
+        starImage2 = "/Images/star.png";
+        starImage3 = "/Images/star.png";
+    }
+    else
+    {
+        starImage1 = "/Images/emptystar.png";
+        starImage2 = "/Images/emptystar.png";
+        starImage3 = "/Images/emptystar.png";
+        starImage4 = "/Images/emptystar.png";
+        starImage5 = "/Images/emptystar.png";
+    }
+}
+
+private void Handle_Clicked4()
+{
+
+    if (starImage4.Equals("/Images/emptystar.png"))
+    {
+        starImage1 = "/Images/star.png";
+        starImage2 = "/Images/star.png";
+        starImage3 = "/Images/star.png";
+        starImage4 = "/Images/star.png";
+    }
+    else
+    {
+        starImage1 = "/Images/emptystar.png";
+        starImage2 = "/Images/emptystar.png";
+        starImage3 = "/Images/emptystar.png";
+        starImage4 = "/Images/emptystar.png";
+        starImage5 = "/Images/emptystar.png";
+    }
+}
+
+private void Handle_Clicked5()
+{
+
+    if (starImage5.Equals("/Images/emptystar.png"))
+    {
+        starImage1 = "/Images/star.png";
+        starImage2 = "/Images/star.png";
+        starImage3 = "/Images/star.png";
+        starImage4 = "/Images/star.png";
+        starImage5 = "/Images/star.png";
+    }
+    else
+    {
+        starImage1 = "/Images/emptystar.png";
+        starImage2 = "/Images/emptystar.png";
+        starImage3 = "/Images/emptystar.png";
+        starImage4 = "/Images/emptystar.png";
+        starImage5 = "/Images/emptystar.png";
+    }
+
+}
+
+
+//LineChart<double> lineChart = new LineChart<double>();
+
+//protected override async Task OnAfterRenderAsync()
+//{
+//    await HandleRedraw();
+//}
+
+//async Task HandleRedraw()
+//{
+//    lineChart.Clear();
+
+//    lineChart.AddLabel(Labels);
+
+//    lineChart.AddDataSet(GetLineChartDataset());
+
+//    await lineChart.Update();
+//}
+
+//LineChartDataset<double> GetLineChartDataset()
+//{
+//    return new LineChartDataset<double>
+//    {
+//        Label = "# of randoms",
+//        Data = RandomizeData(),
+//        BackgroundColor = backgroundColors,
+//        BorderColor = borderColors,
+//        Fill = true,
+//        PointRadius = 2,
+//        BorderDash = new List<int> { }
+//    };
+//}
+
+//string[] Labels = { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
+//List<string> backgroundColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f), ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f) };
+//List<string> borderColors = new List<string> { ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f) };
+
+//List<double> RandomizeData()
+//{
+//    var r = new Random(DateTime.Now.Millisecond);
+
+//    return new List<double>
+//{ r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble(), r.Next( 3, 50 ) * r.NextDouble() };
+//}
+}

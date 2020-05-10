@@ -1,8 +1,6 @@
-﻿using System;
-using MeetupSurvey.Core;
-using MeetupSurvey.Core.Device;
+﻿using MeetupSurvey.Core.Device;
 
-namespace MeetupSurvey.Infrastructure
+namespace MeetupSurvey.Core
 {
     public class CoreServicesImpl : ICoreServices
     {
@@ -11,7 +9,9 @@ namespace MeetupSurvey.Infrastructure
                                 ILocalize localize,
                                 ILogger logger,
                                 INetwork network,
-                                IAppSettings appSettings)
+                                IAppSettings appSettings,
+                                IVersionInfo versionInfo,
+                                IWebNavigationService webNavigationService)
         {
             this.AppSettings = appSettings;
             this.Profile = profile;
@@ -19,6 +19,8 @@ namespace MeetupSurvey.Infrastructure
             this.Localize = localize;
             this.Network = network;
             this.Log = logger;
+            this.VersionInfo = versionInfo;
+            this.WebNavigationService = webNavigationService;
         }
 
 
@@ -28,5 +30,7 @@ namespace MeetupSurvey.Infrastructure
         public ILocalize Localize { get; }
         public INetwork Network { get; }
         public ILogger Log { get; }
+        public IVersionInfo VersionInfo { get; }
+        public IWebNavigationService WebNavigationService { get; }
     }
 }

@@ -1,0 +1,41 @@
+@inherits LayoutComponentBase
+@inject HttpClient httpClient
+@inject ICoreServices coreServices
+@inject IJSRuntime jsRuntime
+
+<div class="primary-gradient full-height">
+
+    <div class="login-area content bg-white">
+        <div class="text-center row">
+            <div class="col align-content-center mt-5">
+                <img src="/Images/RateTheMeet_Logo.png" class="login-logo mt-3 mb-4" />
+                <div class="w-50 about-paragraph">
+                    <h4>Welcome!</h4>
+                    <p>RateTheMeet is a survey app that is made for Meetup. It allows Meetup group organizers to gather valuable feedback from attendees, while also rewarding them with prizes.</p>
+                </div>
+            </div>
+            <div class="w-100 mt-5">
+                <button class="meetup-button rounded-button" @onclick="OnLoginClick"><i class="fab fa-meetup" />Login with Meetup!</button>
+            </div>
+        </div>
+        <div class="primary-gradient bsilabs-bubble text-center p-4 vertical-align-center">
+            <p class="text-white small mt-2">POWERED BY:</p>
+            <img src="/Images/bsiLabsLogoWhite.png" class="bsi-logo" />
+        </div>
+    </div>
+</div>
+
+@code {
+
+async Task OnLoginClick()
+{
+    Console.WriteLine("OnLoginClick");
+    var meetupAuthorizationUri = "/current";//$"https://secure.meetup.com/oauth2/authorize?client_id={coreServices.AppSettings.MeetupClientId}&response_type=token&redirect_uri={coreServices.AppSettings.MeetupRedirectUri}";
+    await coreServices.WebNavigationService.NavigateAsync(meetupAuthorizationUri);
+
+    var name = "access_token";
+    var value = "1892632873f1fdff4d0aa382e1da87b8";
+    await jsRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", name, value);
+}
+
+}

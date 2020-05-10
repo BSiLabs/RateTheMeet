@@ -1,0 +1,77 @@
+@page "/mygroups"
+
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+
+<h1 class="mt-4 ml-4">My Groups</h1>
+
+<div class="row">
+
+    @if (GroupList != null && GroupList.Any())
+    {
+        int groupNumber1 = 0;
+        int groupNumber2 = 0;
+
+            <div class="col-md-6">
+                <ul class="list-view">
+                    @foreach (var group in GroupList)
+                    {
+                        @if (groupNumber1 % 2 == 0)
+                    {
+                            <li class="list-item shadow rounded">
+                                <div class="image-container">
+                                    <img src="@group.KeyPhoto" class="group-header-img" />
+                                    <div class="group-title pr-2 pl-2">@group.Name</div>
+                                </div>
+                            </li>
+                    }
+                        groupNumber1++;
+                    }
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-view">
+                    @foreach (var group in GroupList)
+                    {
+                        @if (groupNumber2 % 2 != 0)
+                    {
+                            <li class="list-item shadow rounded">
+                                <div class="image-container">
+                                    <img src="@group.KeyPhoto" class="group-header-img" />
+                                    <div class="group-title pr-2 pl-2">@group.Name</div>
+                                </div>
+                            </li>
+                    }
+                        groupNumber2++;
+                    }
+                </ul>
+            </div>
+    }
+    </div>
+    @code {
+
+        List<GroupDTO> GroupList = new List<GroupDTO>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            Console.WriteLine("OnInitializedAsync");
+
+            try
+            {
+                const string groupsUri = "https://meetupsurvey-test.azurewebsites.net/api/groups";
+                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", "1892632873f1fdff4d0aa382e1da87b8");
+                GroupList = await httpClient.GetJsonAsync<List<GroupDTO>>(groupsUri);
+            }
+            catch (HttpRequestException ex)
+            {
+                await jsRuntime.InvokeAsync<string>("ShowMessage", $"Loading data from the server failed: {ex}");
+            }
+            catch (Exception ex)
+            {
+                await jsRuntime.InvokeAsync<string>("ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+            }
+
+            Console.WriteLine($"CurrentSurveyList.Count {GroupList?.Count}");
+        }
+    }
+

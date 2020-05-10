@@ -1,0 +1,58 @@
+@page "/current"
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+
+<div class="row">
+    <div class="col">
+        <h1 class="mt-4 ml-4">Current Surveys</h1>
+        <ul class="list-view">
+
+            @if (CurrentSurveyList != null && CurrentSurveyList.Any())
+            {
+                // TODO get Meetup GroupId to group
+                @foreach (var survey in CurrentSurveyList)
+                {
+                    <SurveyListItem survey="@survey" />
+                }
+            }
+
+        </ul>
+        <a href="/editsurvey" class="fixed-button-bottom-right blue-button shadow rounded-button"><i class="far fa-plus fa-fw"></i>New Survey</a>
+    </div>
+</div>
+
+
+@code
+{
+
+List<SurveyDTO> CurrentSurveyList = new List<SurveyDTO>();
+
+protected override async Task OnInitializedAsync()
+{
+    Console.WriteLine("OnInitializedAsync");
+
+    try
+    {
+        const string currentSurveysUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
+
+        var name = "access_token";
+        var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
+
+        httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+        var surveyList = await httpClient.GetJsonAsync<List<SurveyDTO>>(currentSurveysUri);
+        CurrentSurveyList = surveyList.Where(survey => !survey.HasCompleted).ToList();
+    }
+    catch (HttpRequestException ex)
+    {
+        await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
+    }
+    catch (Exception ex)
+    {
+        await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+    }
+
+    Console.WriteLine($"CurrentSurveyList.Count {CurrentSurveyList?.Count}");
+}
+
+}

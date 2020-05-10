@@ -1,0 +1,23 @@
+@page "/about"
+@inject ICoreServices coreServices
+
+<div class="row">
+    <div class="col">
+        <h1 class="mt-4 ml-4">About</h1>
+        <div class="white-hover-box rounded shadow text-center pt-3 pb-3">
+
+            <p class="primary-blue-text text-left">Version: @GetVersion()</p>
+            <p class="text-black-50 about-text mb-3 text-left">RateTheMeet is a survey app that is made for Meetup. It allows Meetup group organizers to gather valuable feedback from attendees, while also rewarding them with prizes.</p>
+            <div class="col mt-4 mb-4">
+                <a href="mailto:appadmin@bsilabs.ca?Subject=RateTheMeet%20App" class="blue-button rounded-button mr-2 shadow"><i class="far fa-paper-plane fa-fw"></i>Contact Us</a>
+            </div>
+            <div class="col mt-4 mb-4">
+                <a href="https://github.com/BSiLabs/RateTheMeet/issues" class="blue-button rounded-button shadow"><i class="fab fa-github-alt fa-fw"></i>Report An Issue</a>
+            </div>
+        </div>
+        </div>
+</div>
+
+@code {
+string GetVersion() => coreServices.VersionInfo.CurrentVersion;
+}

@@ -1,0 +1,50 @@
+                <li class="list-item shadow rounded">
+                    <div class="row wide-layout">
+                        <div class="col-10">
+                            <a class="list-button" href="/surveypage/@survey.Id">
+                                <span class="survey-name">@survey.Name | @survey.DatePublished</span>
+                                <span class="status-text">@(survey.HasCompleted ? "Completed" : "Not Completed")</span>
+                                <span class="info-text">@survey.Questions.Count Question(s) | @survey.Entries Entries</span>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <div class="float-right">
+                                @* TODO make this a double *@
+                                <span class="rating">@survey.Average<i class="fas fa-star" /></span>
+                                <i class="far fa-award" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row stacked-layout">
+
+                        <a class="list-button" href="/surveypage/@survey.Id">
+                            <p>@survey.Name | @survey.DatePublished</p>
+                            <span class="status-text">@(survey.HasCompleted ? "Completed" : "Not Completed")</span>
+                            <span class="info-text">@survey.Questions.Count Question(s) | @survey.Entries Entries</span>
+                        </a>
+                        <div class="float-right">
+                            <span class="rating">@survey.Average<i class="fas fa-star" /></span>
+                            <i class="far fa-award" />
+                        </div>
+
+                    </div>
+
+                    <div class="row mobile-layout">
+
+                        <a class="list-button" href="/surveypage/@survey.Id">
+                            <p>@survey.Name | @survey.DatePublished</p>
+                            <p class="status-text">@(survey.HasCompleted ? "Completed" : "Not Completed")</p>
+                            <p class="info-text">@survey.Questions.Count Question(s) | @survey.Entries Entries</p>
+                        </a>
+                        <span class="rating">@survey.Average<i class="fas fa-star" /></span>
+                        <i class="far fa-award" />
+
+
+                    </div>
+                </li>
+
+@code
+{
+[Parameter]
+public SurveyDTO survey { get; set; }
+}

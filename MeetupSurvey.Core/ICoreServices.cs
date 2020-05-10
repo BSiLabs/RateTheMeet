@@ -1,8 +1,6 @@
-﻿using System;
-using MeetupSurvey.Core;
-using MeetupSurvey.Core.Device;
+﻿using MeetupSurvey.Core.Device;
 
-namespace MeetupSurvey
+namespace MeetupSurvey.Core
 {
     public interface ICoreServices
     {
@@ -12,5 +10,7 @@ namespace MeetupSurvey
         ILocalize Localize { get; }
         INetwork Network { get; }
         ILogger Log { get; }
+        IVersionInfo VersionInfo { get; }
+        IWebNavigationService WebNavigationService { get; }
     }
 }

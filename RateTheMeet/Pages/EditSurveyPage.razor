@@ -1,0 +1,206 @@
+@page "/editsurvey"
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+
+<div class="row mt-3">
+    <a class="ml-3 primary-blue-text" @onclick="SaveSurvey"><i class="far fa-save" />Save</a>
+    <a class="ml-3 primary-blue-text"><i class="far fa-trash" />Delete</a>
+    <a class="ml-3 primary-blue-text add-prizes-link" href="/addprizes"><i class="far fa-award" />Add Prizes</a>
+</div>
+<div class="row mt-5">
+    <a href="/current"><i class="far fa-angle-left pr-3 mt-1" /></a> <input class="survey-name-input" placeholder="Survey Name" @bind="@Survey.Name" />
+    <div class="col-lg-6 mb-4 mt-4">
+        <ul class="list-view">
+            @foreach (var question in QuestionList)
+            {
+                <li class="list-item shadow rounded">
+                    <div class="row question">
+                        <div class="col-10 p-0">
+                            <span class="order">@question.Order</span><textarea class="question-input" rows="1" placeholder="Question" @bind="@question.Name" />
+                        </div>
+                        <div class="col-2 p-0">
+                            <button class="far fa-trash trash float-right" @onclick="(e => DeleteQuestion(question))" />
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <a class="admin-button blue-button shadow rounded-button new-desktop fixed-button-bottom" @onclick="NewQuestion"><i class="far fa-plus fa-fw"></i>New Question</a>
+
+        <a class="blue-button rounded-button text-center new-mobile shadow" @onclick="NewQuestion"><i class="far fa-plus"></i></a>
+
+        @*<div class="@AddMenu" @onclick=@ToggleAddMenu>
+                <a class="shadow rounded-circle new-prize" href="/addprizes"><i class="far fa-award" /></a>
+                <a class="shadow rounded-circle new-question" @onclick="@NewQuestion"><i class="far fa-question" /></a>
+            </div>*@
+    </div>
+    <div class="col-lg-6 mb-4 mt-4 prizes">
+        <ul class="list-view">
+            @foreach (var prize in PrizeList)
+            {
+                <li class="list-item shadow rounded">
+                    <div class="row prize">
+                        <div class="col-10 p-0">
+                            <span class="order"></span> <textarea rows="1" placeholder="Prize Name">@prize.Name</textarea>
+                        </div>
+                        <div class="col-2 p-0">
+                            <button class="far fa-trash fa-fw trash float-right" @onclick="(e => DeletePrize(prize))" />
+                        </div>
+                    </div>
+                    @if (string.IsNullOrEmpty(prize.Photo))
+                    {
+                        <div class="mt-3 text-center">
+
+                            <label class="photo-upload">
+                                <input type="file" id="fileUpload" class="primary-blue-text photo-upload rounded" @onchange="UploadPhoto" />
+                                Add Photo <br />
+                                <i class="far fa-plus" />
+                            </label>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mt-3 text-center">
+                            @* TODO Add photo upload blob storage or w.e and populate img with value *@
+                            @*<img src="" />*@
+                            
+                        </div>
+                    }
+                    </li>
+                }
+            </ul>
+            <a class="blue-button admin-button shadow rounded-button fixed-button-bottom new-desktop" @onclick="NewPrize"><i class="far fa-plus fa-fw"></i>Add Prize</a>
+        </div>
+        </div>
+
+
+        @code {
+        //bool collapseAddMenu = true;
+
+        //string AddMenu => collapseAddMenu ? "collapse" : null;
+
+        //void ToggleAddMenu()
+        //{
+        //    collapseAddMenu = !collapseAddMenu;
+        //}
+
+        public SurveyDTO Survey { get; set; }
+
+        List<QuestionDTO> QuestionList = new List<QuestionDTO>();
+
+        List<PrizeDTO> PrizeList = new List<PrizeDTO>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            Console.WriteLine("OnInitializedAsync EditSurveyPage");
+            Survey = new SurveyDTO();
+
+            if (!QuestionList.Any())
+            {
+                var id = Guid.NewGuid().ToString();
+                QuestionList.Add(new QuestionDTO() { Id = id, Order = QuestionList.Count + 1, SurveyId = this.Survey.Id });
+            }
+
+            if (!PrizeList.Any())
+            {
+                var id = Guid.NewGuid().ToString();
+                PrizeList.Add(new PrizeDTO() { Id = id, SurveyId = this.Survey.Id });
+            }
+            //try
+            //{
+            //    const string questionsUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
+
+            //    var name = "access_token";
+            //    var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
+
+            //    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+            //    var surveyList = await httpClient.GetJsonAsync<List<QuestionDTO>>(questionsUri);
+            //}
+            //catch (HttpRequestException ex)
+            //{
+            //    await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
+            //}
+            //catch (Exception ex)
+            //{
+            //    await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+            //}
+
+        }
+
+        void DeleteQuestion(QuestionDTO question)
+        {
+            Console.WriteLine(QuestionList.Count);
+            Console.WriteLine(question.Order);
+            var itemToRemove = QuestionList.Single(x => x.Id == (question.Id));
+            QuestionList.Remove(itemToRemove);
+        }
+
+        void DeletePrize(PrizeDTO prize)
+        {
+            Console.WriteLine(PrizeList.Count);
+            var itemToRemove = PrizeList.Single(x => x.Id == (prize.Id));
+            PrizeList.Remove(itemToRemove);
+        }
+
+        private void NewQuestion()
+        {
+            var id = Guid.NewGuid().ToString();
+            QuestionList.Add(new QuestionDTO() { Id = id, Order = QuestionList.Count + 1, SurveyId = this.Survey.Id });
+
+        }
+
+        public async Task SaveSurvey()
+        {
+            if (String.IsNullOrEmpty(Survey.Name))
+            {
+                Survey.Name = "New Survey - " + DateTime.Now.ToString("MMM dd, yyyy");
+            }
+            //var model = Survey.ToDTO();
+
+            //if (model.Id == null)
+            //{
+            //    var updatedSurvey = await surveyService.AddSurvey(model);
+            //    this.Survey = new SurveyDTO(updatedSurvey, this.Localize);
+            //    Console.WriteLine(updatedSurvey.Id);
+            //}
+            //else
+            //{
+            //Add back the deleted questions to the list so we know what to delete on backend
+            //model.Questions.AddRange(DeletedQuestions.Select(x => x.ToDTO()));
+            //await surveyService.UpdateSurvey(model);
+            //}
+
+            //IsEditing = false;
+            //HasChanged = false;
+            //HasSaved = true;
+            //CanAddPrizes = true;
+        }
+
+        private void NewPrize()
+        {
+            var id = Guid.NewGuid().ToString();
+            PrizeList.Add(new PrizeDTO() { Id = id, SurveyId = this.Survey.Id });
+        }
+
+
+        private string surveyId { get; set; }
+
+
+        private void NavigateToPrizePage()
+        {
+            surveyId = Survey.Id;
+            navigationManager.NavigateTo($"/addprizes/{surveyId}");
+        }
+
+        void UploadPhoto(ChangeEventArgs e)
+        {
+            //TODO get Prize.Id to add photo to object
+            Console.WriteLine(e.Value.ToString());
+        }
+
+        }
