@@ -110,25 +110,6 @@
                 var id = Guid.NewGuid().ToString();
                 PrizeList.Add(new PrizeDTO() { Id = id, SurveyId = this.Survey.Id });
             }
-            //try
-            //{
-            //    const string questionsUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
-
-            //    var name = "access_token";
-            //    var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
-
-            //    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
-            //    var surveyList = await httpClient.GetJsonAsync<List<QuestionDTO>>(questionsUri);
-            //}
-            //catch (HttpRequestException ex)
-            //{
-            //    await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
-            //}
-            //catch (Exception ex)
-            //{
-            //    await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
-            //}
 
         }
 

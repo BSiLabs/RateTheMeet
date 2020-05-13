@@ -11,16 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise" Version="0.8.8.1" />
-    <PackageReference Include="Blazorise.Charts" Version="0.8.8.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview4.19579.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.1.0-preview4.19579.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.1.0-preview4.19579.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.1.0-preview4.19579.2" PrivateAssets="all" />
+    <PackageReference Include="Blazorise" Version="0.9.0.2" />
+    <PackageReference Include="Blazorise.Charts" Version="0.9.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0-rc1.20223.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="11.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MeetupSurvey.Core\MeetupSurvey.Core.csproj" />
+    <ProjectReference Include="..\MeetupSurvey.Data.Impl\MeetupSurvey.Data.Impl.csproj" />
   </ItemGroup>
 </Project>

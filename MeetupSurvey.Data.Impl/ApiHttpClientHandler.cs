@@ -7,13 +7,11 @@ using MeetupSurvey.ApiClient;
 using MeetupSurvey.Core;
 using MeetupSurvey.DTO;
 using Refit;
-using Xamarin.Essentials;
 
 namespace MeetupSurvey.Data.Impl
 {
     public class ApiHttpClientHandler : DelegatingHandler
     {
-        readonly IApiClient apiClient;
         readonly IProfile profile;
         readonly IAppSettings appSettings;
         bool retried = false;
@@ -28,35 +26,34 @@ namespace MeetupSurvey.Data.Impl
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-                var user = await this.profile.GetUser();
-                if (user != null)
-                {
-                    //var client = this.GetClient();
-                    var accessToken = user.access_token;
-                    if (DateTime.UtcNow > user.Expiry)
-                    {
-                        await RefreshToken(user);
-                    }
-
-                    request.Headers.Authorization = new AuthenticationHeaderValue(
-                        "bearer",
-                        accessToken
-                    );
-                }
-      
-                var response = await base.SendAsync(request, cancellationToken);
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && !retried)
+            var user = await this.profile.GetUser();
+            if (user != null)
+            {
+                var accessToken = user.access_token;
+                if (DateTime.UtcNow > user.Expiry)
                 {
                     await RefreshToken(user);
-                    retried = true;
+                }
 
-                    return await SendAsync(request, cancellationToken);
-                }
-                else
-                {
-                    retried = false;
-                    return response;
-                }
+                request.Headers.Authorization = new AuthenticationHeaderValue(
+                    "bearer",
+                    accessToken
+                );
+            }
+      
+            var response = await base.SendAsync(request, cancellationToken);
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && !retried)
+            {
+                await RefreshToken(user);
+                retried = true;
+
+                return await SendAsync(request, cancellationToken);
+            }
+            else
+            {
+                retried = false;
+                return response;
+            }
         }
 
 

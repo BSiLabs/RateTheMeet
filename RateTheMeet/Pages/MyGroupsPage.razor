@@ -2,6 +2,7 @@
 
 @inject HttpClient httpClient
 @inject IJSRuntime jsRuntime
+@inject ISurveyService SurveyService
 
 <h1 class="mt-4 ml-4">My Groups</h1>
 
@@ -50,7 +51,7 @@
     </div>
     @code {
 
-        List<GroupDTO> GroupList = new List<GroupDTO>();
+        public List<GroupDTO> GroupList = new List<GroupDTO>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -58,17 +59,16 @@
 
             try
             {
-                const string groupsUri = "https://meetupsurvey-test.azurewebsites.net/api/groups";
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", "1892632873f1fdff4d0aa382e1da87b8");
-                GroupList = await httpClient.GetJsonAsync<List<GroupDTO>>(groupsUri);
+                // TODO: when shall we force the update?
+                GroupList = await SurveyService.GetGroups(false);
             }
             catch (HttpRequestException ex)
             {
-                await jsRuntime.InvokeAsync<string>("ShowMessage", $"Loading data from the server failed: {ex}");
+                await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
             }
             catch (Exception ex)
             {
-                await jsRuntime.InvokeAsync<string>("ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+                await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
             }
 
             Console.WriteLine($"CurrentSurveyList.Count {GroupList?.Count}");

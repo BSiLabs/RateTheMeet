@@ -1,6 +1,6 @@
 @page "/current"
-@inject HttpClient httpClient
 @inject IJSRuntime jsRuntime
+@inject ISurveyService surveyService
 
 <div class="row">
     <div class="col">
@@ -25,34 +25,28 @@
 @code
 {
 
-List<SurveyDTO> CurrentSurveyList = new List<SurveyDTO>();
+    List<SurveyDTO> CurrentSurveyList = new List<SurveyDTO>();
 
-protected override async Task OnInitializedAsync()
-{
-    Console.WriteLine("OnInitializedAsync");
-
-    try
+    protected override async Task OnInitializedAsync()
     {
-        const string currentSurveysUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
+        Console.WriteLine("OnInitializedAsync");
 
-        var name = "access_token";
-        var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
+        try
+        {
+            // TODO: when should we force refresh?
+            var surveyList = await surveyService.GetSurveys(false);
+            CurrentSurveyList = surveyList.Where(survey => !survey.HasCompleted).ToList();
+        }
+        catch (HttpRequestException ex)
+        {
+            await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
+        }
+        catch (Exception ex)
+        {
+            await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
+        }
 
-        httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
-        var surveyList = await httpClient.GetJsonAsync<List<SurveyDTO>>(currentSurveysUri);
-        CurrentSurveyList = surveyList.Where(survey => !survey.HasCompleted).ToList();
+        Console.WriteLine($"CurrentSurveyList.Count {CurrentSurveyList?.Count}");
     }
-    catch (HttpRequestException ex)
-    {
-        await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Loading data from the server failed: {ex}");
-    }
-    catch (Exception ex)
-    {
-        await jsRuntime.InvokeAsync<string>("blazorExtensions.ShowMessage", $"Oops, we encountered an unexpected error: {ex}");
-    }
-
-    Console.WriteLine($"CurrentSurveyList.Count {CurrentSurveyList?.Count}");
-}
 
 }

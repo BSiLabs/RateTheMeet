@@ -1,13 +1,14 @@
 @page "/archive"
 @inject HttpClient httpClient
 @inject IJSRuntime jsRuntime
+@inject ISurveyService SurveyService
 
 <div class="row">
     <div class="col">
         <h1 class="mt-4 ml-4">Archived Surveys</h1>
         <ul class="list-view">
 
-            @if (SurveyList != null && SurveyList.Any())
+            @if (SurveyList?.Any() == true)
             {
                 @foreach (var survey in SurveyList)
                 {
@@ -23,7 +24,7 @@
 @code
 {
 
-    List<SurveyDTO> SurveyList = new List<SurveyDTO>();
+    public List<SurveyDTO> SurveyList = new List<SurveyDTO>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -31,14 +32,8 @@
 
         try
         {
-            const string surveysUri = "https://meetupsurvey-test.azurewebsites.net/api/surveys";
-
-            var name = "access_token";
-            var token = await jsRuntime.InvokeAsync<string>("blazorExtensions.ReadCookie", name);
-
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-
-            var surveyList = await httpClient.GetJsonAsync<List<SurveyDTO>>(surveysUri);
+            // TODO: when do we need to forceUpdate 
+            var surveyList = await SurveyService.GetSurveys(false);
             SurveyList = surveyList.Where(survey => survey.HasCompleted).ToList();
         }
         catch (HttpRequestException ex)

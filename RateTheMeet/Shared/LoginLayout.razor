@@ -34,7 +34,7 @@ async Task OnLoginClick()
     await coreServices.WebNavigationService.NavigateAsync(meetupAuthorizationUri);
 
     var name = "access_token";
-    var value = "1892632873f1fdff4d0aa382e1da87b8";
+    var value = "NOT_A_VALID_ACCESS_TOKEN";
     await jsRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", name, value);
 }
 
